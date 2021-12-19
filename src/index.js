@@ -4,12 +4,22 @@ const path = require('path');
 const app = express();
 
 // settings
-app.set('port', process.env.PORT || 3030);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // middlewares
 app.use(morgan('dev'));
+
+app.get('/saludo', function (req, res) {
+
+	var nombre = req.query.nombre || '';	
+  console.log(nombre);
+
+  res.render('admin', { title: 'Administrador' });
+
+}); 
+
 
 // routes
 app.use(require('./routes'));
