@@ -22,6 +22,8 @@ router.post('/Proceder', function (req, res) {
   var password = req.body.password|| '';	
   if(nombre==administrador&&password==passAdministrador){
     res.render('./administrador/administrador', { title: 'Administrador' });
+    console.log("Precondiciones");
+    console.log("Necesita logearse como administrador");
   }else if(nombre==secretaria&&password==passSecretaria){
     res.render('secretaria', { title: 'Secretaria' });
   }else if(nombre==laboratorista&&password==passLaboratorista){
@@ -33,20 +35,33 @@ router.post('/Proceder', function (req, res) {
 //router administrador
 router.get('/administrador', (req, res) => {
   res.render('./administrador/administrador', { title: 'Iniciar Sesion Administrador' });
+  console.log("Precondiciones");
+  console.log("Necesita logearse como administrador");
 });
 router.get('/administrador/examenes', (req, res) => {
   res.render('./administrador/examenes', { title: 'Examenes Admin' });
+  console.log("Precondiciones");
+  console.log("Deben existir examenes");
 });
 router.get('/administrador/reportes', (req, res) => {
   res.render('./administrador/reportes', { title: 'Reportes Admin' });
+  console.log("Precondiciones");
+  console.log("Deben haber sido procesados los reportes");
 });
 router.get('/administrador/usuarios', (req, res) => {
   res.render('./administrador/usuarios', { title: 'Usuarios Admin' });
+  console.log("Precondiciones");
+  console.log("Deben haber usuarios");
 });
 router.get('/administrador/corteMes', (req, res) => {
   res.render('./administrador/corteMes', { title: 'Corte del Mes' });
+  console.log("Precondiciones");
+  console.log("Haber procesado examenes");
+  console.log("Ser fin de mes");
 });
 router.get('/administrador/roles', (req, res) => {
-  res.render('./administrador/roles', { title: 'Corte del Mes' });
+  res.render('./administrador/roles', { title: 'Roles' });
+  console.log("Precondiciones");
+  console.log("Sin precondiciones");
 });
 module.exports = router;
