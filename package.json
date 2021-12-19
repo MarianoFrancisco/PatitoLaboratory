@@ -4,6 +4,7 @@
   "description": "Pagina web de laboratorio patito",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon src/"
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
