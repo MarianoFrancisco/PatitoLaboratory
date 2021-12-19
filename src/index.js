@@ -1,10 +1,12 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+var body_parser = require('body-parser');
 const app = express();
+app.use(body_parser.urlencoded({extended:true}));
 
 // settings
-app.set('port', process.env.PORT || 3090);
+app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
