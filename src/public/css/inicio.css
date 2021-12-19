@@ -21,7 +21,7 @@
 			border : 4px solid #00cccc;
 			
 		}
-		#in{
+		.input{
 			width: 90%;
 			height: 50px;
 			border-radius: 10px;
@@ -30,7 +30,7 @@
 			background-color: #333333;
 			color: white;
 		}
-		#in:focus{
+		.input:focus{
 			border:6px solid #00cccc;
 		}
 		#inBtn{

@@ -26,7 +26,6 @@ router.post('/Proceder', function (req, res) {
   }else if(nombre==laboratorista&&password==passLaboratorista){
     res.render('laboratorista', { title: 'Laboratorista' });
   }else{
-    
     res.render('index', { title: 'Iniciar Sesion' });
   }
 });
