@@ -11,15 +11,6 @@ app.set('view engine', 'ejs');
 // middlewares
 app.use(morgan('dev'));
 
-app.get('/saludo', function (req, res) {
-
-	var nombre = req.query.nombre || '';	
-  console.log(nombre);
-
-  res.render('admin', { title: 'Administrador' });
-
-}); 
-
 
 // routes
 app.use(require('./routes'));
