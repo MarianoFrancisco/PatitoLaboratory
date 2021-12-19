@@ -11,7 +11,6 @@ app.set('view engine', 'ejs');
 // middlewares
 app.use(morgan('dev'));
 
-
 // routes
 app.use(require('./routes'));
 
