@@ -1,8 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const app = express();
-<<<<<<< HEAD
-=======
 //const password = 	document.getElementById("datoPassword");
 
 let administrador = 'Marco';
@@ -11,21 +9,10 @@ let secretaria = 'Juana';
 let passSecretaria='1234';
 let laboratorista = 'Alejandro';
 let passLaboratorista='1234';
->>>>>>> Mariano
 
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
 });
-<<<<<<< HEAD
-
-router.post('/validar', (req, res) => {
-  let nombre = req.body.nombre || '';
-  console.log(nombre);
-});
-
-router.get('/Admin', (req, res) => {
-  res.render('admin', { title: 'Administrador' });
-=======
 router.get('/pruebaCrud', (req, res) => {
   res.render('pruebaCrud', { title: 'Iniciar Sesion' });
 });
@@ -41,6 +28,5 @@ router.post('/Proceder', function (req, res) {
   }else{
     res.render('index', { title: 'Iniciar Sesion' });
   }
->>>>>>> Mariano
 });
 module.exports = router;
