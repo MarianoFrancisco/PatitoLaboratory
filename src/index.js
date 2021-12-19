@@ -9,7 +9,7 @@ app.set('port',3000);
 
 //routers
 app.get('/', (req,res)=>{
-    res.sendFile(path.join(__dirname, '/views/index1.ejs'));
+    res.sendFile(path.join(__dirname, '/views/index.html'));
 
 });
 
