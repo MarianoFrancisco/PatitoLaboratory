@@ -16,6 +16,7 @@ router.get('/saludo', function (req, res) {
   console.log(nombre);
   console.log("desde router");
   res.render('admin', { title: 'Administrador' });
+  
 
 });
 
