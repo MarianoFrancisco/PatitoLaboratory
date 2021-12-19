@@ -1,5 +1,7 @@
 <link href="/css/menuinicio.css" rel="stylesheet" id="bootstrap-css">
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<link href="/css/crud.css" rel="stylesheet" type="text/css"/>
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 <!------ Include the above in your HEAD tag ---------->
@@ -36,14 +38,38 @@
                         <div class="col-md-5">
                             <div class="header-rightside">
                                 <ul class="list-inline header-top pull-right">
-                                    <li class="hidden-xs"><a href="#" class="add-project" data-toggle="modal" data-target="#add_project">Cerrar sesión</a></li>
+                                    <li class="hidden-xs"><a href="/" class="add-project" data-toggle="modal" data-target="#add_project">Cerrar sesión</a></li>
                                 </ul>
                             </div>
                         </div>
                     </header>
                 </div>
                 <div class="user-dashboard">
-                    <h1>Hola secretaria</h1>             
+
+        <hr>
+            <a class="btn btn-success btn-lg " style="margin-left:870px;" href="">Crear Pieza</a>
+            <br>
+            <br>             
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+            <th >Tipo Pieza</th>
+            <th class="text-center">Costo</th>
+            <th class="text-center">Cantidad</th>
+            <th class="text-center">Manipulacion</th>
+            </tr>
+        </thead> 
+        <tbody>
+                <tr>
+                    <th scope="row"></th>
+                    <td class="text-center"></td>
+                    <td class="text-center"></td>
+                    <td class="text-center">
+                        <a href="" class="btn btn-primary">Modificar</a>
+                        <a href="" class="btn btn-danger">Suprimir</a>
+                    </td>
+                </tr>
+        </tbody>            
                     </div>
                 </div>
             </div>
