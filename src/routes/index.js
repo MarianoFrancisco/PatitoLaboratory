@@ -5,7 +5,7 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
 });
 
-router.get('/Administrador', (req, res) => {
+router.get('/Admin', (req, res) => {
   res.render('admin', { title: 'Administrador' });
 });
 
