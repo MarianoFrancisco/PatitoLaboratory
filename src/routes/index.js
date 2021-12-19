@@ -13,7 +13,9 @@ let passLaboratorista='1234';
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
 });
-
+router.get('/pruebaCrud', (req, res) => {
+  res.render('pruebaCrud', { title: 'Iniciar Sesion' });
+});
 router.post('/Proceder', function (req, res) {
 	var nombre = req.body.nombre|| '';	
   var password = req.body.password|| '';	
