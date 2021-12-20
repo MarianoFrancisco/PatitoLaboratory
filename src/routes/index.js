@@ -33,6 +33,7 @@ router.post('/Proceder', function (req, res) {
 });
 router.get('/Proceder', function(req,res){
   const op = req.query.opcion || '';
+
   res.render('laboratorista', { title: nombre, opcion: op});
 });
 module.exports = router;
