@@ -14,21 +14,23 @@ router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
 });
 
+
+//Secretaria
 router.get('/secretariaIndex', (req, res) => {
-  res.render('secretariaIndex', { title: 'Inicio' });
+  res.render('./secretaria/secretariaIndex', { title: 'Inicio' });
 });
 
 router.get('/ingresarPaciente', (req, res) => {
-  res.render('ingresarPaciente', { title: 'Registro' });
+  res.render('./secretaria/ingresarPaciente', { title: 'Registro' });
 });
 
 router.get('/resultadosSecretaria', (req, res) => {
-  res.render('resultadosSecretaria', { title: 'Resultados' });
+  res.render('./secretaria/resultadosSecretaria', { title: 'Resultados' });
 });
 
 
 router.get('/horariosSecretaria', (req, res) => {
-  res.render('horariosSecretaria', { title: 'Horarios' });
+  res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
 });
 
 router.post('/Proceder', function (req, res) {
@@ -39,7 +41,7 @@ router.post('/Proceder', function (req, res) {
     console.log("Precondiciones");
     console.log("Necesita logearse como administrador");
   }else if(nombre==secretaria&&password==passSecretaria){
-    res.render('secretariaIndex', { title: 'Secretaria' });
+    res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
   }else if(nombre==laboratorista&&password==passLaboratorista){
     res.render('laboratorista', { title: 'Laboratorista' });
   }else{
