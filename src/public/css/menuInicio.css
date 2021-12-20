@@ -247,7 +247,7 @@ li,ul{
 }
 
 .add-project::before {
-    background: rgba(0, 0, 0, 0) url("../images/plus.png") no-repeat scroll 0 0;
+    background: rgba(0, 0, 0, 0) ;
     content: "";
     ;
     height: 12px;
