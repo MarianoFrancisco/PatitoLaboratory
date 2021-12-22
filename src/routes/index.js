@@ -1,13 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const lab  = require('./laboratorista');
+const {encrypt, compare } = require('./../extra/encriptar');
 
-
+let laboratorista = 'Ale';
+let passLaboratorista= '$2a$10$bTXb/uRl5aFF5nxHtlD04.Q6YaoanfQMrySIRD4yIpFo.o7SrsqHW';
 let administrador = 'Marco';
 let passAdministrador='1234';
 let secretaria = 'Juana';
 let passSecretaria='1234';
-let laboratorista = 'Ale';
-let passLaboratorista='1234';
 
 // Iniciar sesion en los diferentes usuarios
 router.get('/', (req, res) => {
@@ -33,10 +34,12 @@ router.get('/horariosSecretaria', (req, res) => {
   res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
 });
 
+let nombre; 
 //validar credenciales de los usuarios al momento de logiarse
-router.post('/Proceder', function (req, res) {
-	nombre = req.body.nombre|| '';	
-  const password = req.body.password|| '';	
+router.post('/Proceder', async (req, res) => {
+	nombre = req.body.nombre|| '';	  
+  const password = req.body.password|| '';
+
 
   if(nombre==administrador&&password==passAdministrador){
     res.render('./administrador/administrador', { title: 'Administrador' });
@@ -44,21 +47,17 @@ router.post('/Proceder', function (req, res) {
     console.log("Necesita logearse como administrador");
   }else if(nombre==secretaria&&password==passSecretaria){
     res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
-  }else if(nombre==laboratorista&&password==passLaboratorista){
+  }else if(nombre==laboratorista && await compare(password, passLaboratorista)){
     res.redirect('/laboratorista');
+
   }else{
-    res.render('index', { title: 'Iniciar Sesion' });
+    res.status(404).redirect('/');
   }
-});
-router.get('/Proceder', function(req,res){
 });
 
 //rutas de laboratorista
-router.get('/laboratorista', function(req,res){
-  const op = req.query.opcion || 1;
+lab(router , nombre);
 
-  res.render('laboratorista', { title: nombre, opcion: op});
-});
 
 //router administrador
 router.get('/administrador', (req, res) => {
@@ -92,4 +91,5 @@ router.get('/administrador/roles', (req, res) => {
   console.log("Precondiciones");
   console.log("Sin precondiciones");
 });
+
 module.exports = router;
