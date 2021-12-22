@@ -2,12 +2,63 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>laboratorista</title>
+    <%- include('partials/head'); -%>
 </head>
-<body>
-    <script>console.log('Necesita logearse como administrador')</script>
-    <h1>Hola</h1>
+<body class="home">
+    <div class="container-fluid display-table">
+        <div class="row display-table-row">
+            <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
+                <div class="logo">
+                    <a hef="home.html"><img src="https://i.pinimg.com/736x/9c/99/69/9c99697e7bc7f86c914657d65ff2e3cc.jpg" alt="merkery_logo" class="hidden-xs hidden-sm">
+                        <img src="" alt="merkery_logo" class="visible-xs visible-sm circle-logo">
+                    </a>
+                </div>
+                <div class="navi">
+                    <ul>
+                        <li class="active"><a href="/Proceder?opcion=1"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Examenes Pendientes</span></a></li>
+                        <li><a href="/Proceder?opcion=2"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Muestras Disponibles</span></a></li>
+                        <li><a href="/Proceder?opcion=3"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Ingresar Reporte</span></a></li>
+                        <li><a href="/Proceder?opcion=4"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Examenes Hechos</span></a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-10 col-sm-11 display-table-cell v-align">
+
+                <div class="row">
+                    <header>
+                        <div class="col-md-4">
+                            <h2>Laboratorista: <%= title %></h2>
+                        </div>
+                        <div class="col-md-3">
+                            <nav class="navbar-default pull-left">
+                            </nav>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="header-rightside">
+                                <ul class="list-inline header-top pull-right">
+                                    <li class="hidden-xs"> <a href="/" class="add-project" >Cerrar sesión</a> </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </header>
+                </div>
+                <!-- Funcionar para agregar mas conteiner -->
+                <% if (opcion < 2 || opcion > 4 ) { %>
+                    <%- include('partials/laboratorista/examenesP'); -%>  
+                <% } %>
+                <% if (opcion == 4) { %>
+                    <%- include('partials/laboratorista/examenesH'); -%>
+                <% } %>
+                <% if (opcion == 2) { %>
+                    <%- include('partials/laboratorista/muestrasDisponible'); -%>
+                <% } %>
+                <% if (opcion == 3) { %>
+                    <%- include('partials/laboratorista/realizarReporte'); -%>   
+                <% } %>
+            </div>
+        </div>
+    </div>
+    
 </body>
 </html>
+
