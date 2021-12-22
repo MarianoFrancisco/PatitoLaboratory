@@ -2,9 +2,13 @@ const express = require('express');
 const router = express.Router();
 const lab  = require('./laboratorista');
 const {encrypt, compare } = require('./../extra/encriptar');
+const {tokenSign, verifyToken, decodeSing} = require('./../extra/generateToken');
 
-let laboratorista = 'Ale';
-let passLaboratorista= '$2a$10$bTXb/uRl5aFF5nxHtlD04.Q6YaoanfQMrySIRD4yIpFo.o7SrsqHW';
+let laboratorista = {
+  rol: 'laboratorista',
+  nombre: 'Ale',
+  password: '$2a$10$bTXb/uRl5aFF5nxHtlD04.Q6YaoanfQMrySIRD4yIpFo.o7SrsqHW'
+}
 let administrador = 'Marco';
 let passAdministrador='1234';
 let secretaria = 'Juana';
@@ -34,7 +38,8 @@ router.get('/horariosSecretaria', (req, res) => {
   res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
 });
 
-let nombre; 
+let nombre, tokenSession = ''; 
+
 //validar credenciales de los usuarios al momento de logiarse
 router.post('/Proceder', async (req, res) => {
 	nombre = req.body.nombre|| '';	  
@@ -47,8 +52,12 @@ router.post('/Proceder', async (req, res) => {
     console.log("Necesita logearse como administrador");
   }else if(nombre==secretaria&&password==passSecretaria){
     res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
-  }else if(nombre==laboratorista && await compare(password, passLaboratorista)){
+  }else if(nombre==laboratorista.nombre && await compare(password, laboratorista.password)){
+
+    tokenSession = await tokenSign(laboratorista);
+    console.log(tokenSession);
     res.redirect('/laboratorista');
+    //res.send({data: user, tokenSession});
 
   }else{
     res.status(404).redirect('/');
