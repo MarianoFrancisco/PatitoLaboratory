@@ -8,7 +8,7 @@
     "dev": "nodemon src/"
   },
   "author": "Mariano, Pedro y Douglas.",
-  "license": "GPL-3.0-or-later",
+  "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.1",
