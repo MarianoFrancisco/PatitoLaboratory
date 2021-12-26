@@ -63,9 +63,8 @@ router.post('/Proceder', async (req, res) => {
     res.status(404).redirect('/');
   }
 });
-
 //rutas de laboratorista
-lab(router , nombre);
+lab(router , laboratorista.nombre );
 
 
 //router administrador
