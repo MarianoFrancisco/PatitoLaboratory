@@ -29,7 +29,29 @@ router.get('/resultadosSecretaria', (req, res) => {
 
 
 router.get('/horariosSecretaria', (req, res) => {
+  
   res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
+
+});
+
+//importando la conexion
+router.get('/prueba', (req, res) => {
+  
+  let connection = require('./index.js');
+  
+  const sql = 'SELECT * FROM horarios';
+
+  connection.query(sql,(error,result)=>{
+
+    if(error) throw
+
+  });
+
+});
+
+router.get('/horariosSecretaria', (req, res) => {
+  let hola = require('./index.js');
+  res.render('sin nada');
 });
 
 router.post('/Proceder', function (req, res) {
