@@ -1,7 +1,7 @@
 const mysqlhost = process.env.MYSQLHOST || '192.168.0.183';
-const mysqluser = process.env.MYSQLUSER || "DOU";
-const mysqlpass = process.env.MYSQLPASS || ".";
-const mysqldatabase = process.env.MYSQLDATABASE || "USAC"
+const mysqluser = process.env.MYSQLUSER || "oliverPatito";
+const mysqlpass = process.env.MYSQLPASS || "Oliver12345";
+const mysqldatabase = process.env.MYSQLDATABASE || "patitoDB"
 const mysql = require('mysql');
 
 function connect() {
@@ -10,7 +10,7 @@ function connect() {
         host: mysqlhost,
         user: mysqluser,
         password: mysqlpass,
-        database: 'nombreBasedatos',
+        database: mysqldatabase,
         port: 3306 // si el puerto esta en corriendo 
      });
      connection.connect(function(error){

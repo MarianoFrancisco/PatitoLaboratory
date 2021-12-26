@@ -1,4 +1,3 @@
-
 //rutas de laboratorista
     module.exports = (router, nombre) => {
 
