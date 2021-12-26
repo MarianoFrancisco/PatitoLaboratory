@@ -15,9 +15,6 @@ let secretaria = 'Juana';
 let passSecretaria='1234';
 
 // Iniciar sesion en los diferentes usuarios
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Iniciar Sesion' });
-});
 
 
 //Secretaria
@@ -39,6 +36,12 @@ router.get('/horariosSecretaria', (req, res) => {
 });
 
 let nombre, tokenSession = ''; 
+const conexion = require('.././extra/db');
+const sql = 'SELECT * FROM usuario';
+// Iniciar sesion en los diferentes usuarios
+router.get('/', (req, res) => {
+  res.render('index', { title: 'Iniciar Sesion' });
+});
 
 //validar credenciales de los usuarios al momento de logiarse
 router.post('/Proceder', async (req, res) => {
@@ -84,9 +87,15 @@ router.get('/administrador/reportes', (req, res) => {
   console.log("Deben haber sido procesados los reportes");
 });
 router.get('/administrador/usuarios', (req, res) => {
-  res.render('./administrador/usuarios', { title: 'Usuarios Admin' });
+  conexion.query(sql,function (error,results) {
+    if(error) throw error;
+    else{
+      res.render('./administrador/usuarios',{results:results});
+    }
+  });
   console.log("Precondiciones");
   console.log("Deben haber usuarios");
+  conexion.end;
 });
 router.get('/administrador/corteMes', (req, res) => {
   res.render('./administrador/corteMes', { title: 'Corte del Mes' });
