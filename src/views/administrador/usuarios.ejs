@@ -59,24 +59,34 @@
         <table class="table table-bordered">
         <thead>
             <tr>
-            <th >Nombre de Usuario</th>
-            <th class="text-center">Contraseña</th>
-            <th class="text-center">Horario</th>
+            <th >ID</th>
+            <th class="text-center">Nombre de Usuario</th>
+            <th class="text-center">Turno</th>
             <th class="text-center">Rol</th>
             <th class="text-center">Editar</th>
             </tr>
         </thead> 
-        <tbody>
+        <tbody><%var rol;%>
+                <% results.forEach((usuario)=>{
+                  if(usuario.tipoUsuario==1){
+                    rol='Administrador';
+                  }else if(usuario.tipoUsuario==2){
+                    rol='Secretaria';
+                  }else if(usuario.tipoUsuario==3){
+                    rol='Laboratorista';
+                  }
+                    %>
                 <tr>
-                    <th scope="row"></th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+                    <th scope="row"><%=usuario.idUsuario%></th>
+                    <td class="text-center"><%=usuario.nombreUsuario%></td>
+                    <td class="text-center"><%=usuario.idTurno%></td>
+                    <td class="text-center"><%=rol%></td>
                     <td class="text-center">
                         <a href="" class="btn btn-primary ">Modificar</a>
                         <a href="/administrador/usuarios" class="btn btn-danger" >Suprimir</a>
                     </td>
                 </tr>
+                <%})%>
         </tbody>            
                     </div>
                 </div>
