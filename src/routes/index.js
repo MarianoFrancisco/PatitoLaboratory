@@ -108,5 +108,7 @@ router.get('/administrador/roles', (req, res) => {
   console.log("Precondiciones");
   console.log("Sin precondiciones");
 });
-
+//CRUD USUARIO
+const crudUsuario = require('.././views/administrador/crudUsuario');
+router.post('/saveUsuario',crudUsuario.saveUsuario);
 module.exports = router;
