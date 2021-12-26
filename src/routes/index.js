@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 
-
 let administrador = 'Marco';
 let passAdministrador='1234';
 let secretaria = 'Juana';
@@ -12,7 +11,6 @@ let passLaboratorista='1234';
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
 });
-
 
 //Secretaria
 router.get('/secretariaIndex', (req, res) => {
@@ -35,23 +33,28 @@ router.get('/horariosSecretaria', (req, res) => {
 });
 
 //importando la conexion
-router.get('/prueba', (req, res) => {
+router.get('/pp', (req, res) => {
   
-  let connection = require('./index.js');
-  
-  const sql = 'SELECT * FROM horarios';
+  const con = require('.././database/db.js');
 
-  connection.query(sql,(error,result)=>{
+  const sql = 'SELECT * FROM usuario';
 
-    if(error) throw
-
+  con.query(sql,function (err,result,fields) {
+    if(err) throw err;
+    console.log(result);
   });
 
-});
+  con.end;
+/*
+  con.query(sql,(error,results)=>{
+    if(error) throw error;
+    if(results.length>0){
+      res.json(results);
+    }else{
+      res.send('sin resutlados');
+    }
+  });*/
 
-router.get('/horariosSecretaria', (req, res) => {
-  let hola = require('./index.js');
-  res.render('sin nada');
 });
 
 router.post('/Proceder', function (req, res) {
@@ -106,4 +109,5 @@ router.get('/administrador/roles', (req, res) => {
   console.log("Precondiciones");
   console.log("Sin precondiciones");
 });
+
 module.exports = router;
