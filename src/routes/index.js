@@ -4,17 +4,6 @@ const lab  = require('./laboratorista');
 const {encrypt, compare } = require('./../extra/encriptar');
 const {tokenSign, verifyToken, decodeSing} = require('./../extra/generateToken');
 const initDB = require('./../extra/db');
-
-let laboratorista = {
-  rol: 'laboratorista',
-  nombre: 'Ale',
-  password: '$2a$10$bTXb/uRl5aFF5nxHtlD04.Q6YaoanfQMrySIRD4yIpFo.o7SrsqHW'
-}
-let administrador = 'Marco';
-let passAdministrador='1234';
-let secretaria = 'Juana';
-let passSecretaria='1234';
-
 // Iniciar sesion en los diferentes usuarios
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
@@ -46,26 +35,37 @@ router.post('/Proceder', async (req, res) => {
 	nombre = req.body.nombre|| '';	  
   const password = req.body.password|| '';
 
-
-  if(nombre==administrador&&password==passAdministrador){
-    res.render('./administrador/administrador', { title: 'Administrador' });
-    console.log("Precondiciones");
-    console.log("Necesita logearse como administrador");
-  }else if(nombre==secretaria&&password==passSecretaria){
-    res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
-  }else if(nombre==laboratorista.nombre && await compare(password, laboratorista.password)){
-
-    tokenSession = await tokenSign(laboratorista);
-    console.log(tokenSession);
-    res.redirect('/laboratorista');
-    //res.send({data: user, tokenSession});
-
-  }else{
-    res.status(404).redirect('/');
-  }
+  const connect = initDB.connect();
+  connect.query('SELECT * FROM usuario WHERE usuario = ?',[nombre],async (error, results, fields) =>{
+    if (error)
+      throw error;
+    
+    if(results[0] != undefined){
+      let tipo = results[0].tipoUsuario;
+      let passwordd = results[0].passwordUsuario;
+      console.log(results[0]);
+      if (await compare(password,passwordd)) {
+        if(tipo==1){
+          res.render('./administrador/administrador', { title: 'Administrador' });
+      
+        }else if(tipo==2){
+          res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
+      
+        }else if(tipo==3){
+          //tokenSession = await tokenSign(result);
+          //console.log(tokenSession);
+          res.redirect('/laboratorista');
+          //res.send({data: user, tokenSession});
+      
+        }else{ res.status(404).redirect('/'); }
+      }else{ res.status(404).redirect('/'); }
+    }else{ res.status(404).redirect('/'); }
+  });
+  connect.end();
+  
 });
 //rutas de laboratorista
-lab(router , laboratorista.nombre );
+lab(router , nombre);
 
 
 //router administrador
