@@ -17,5 +17,23 @@ exports.savePaciente=(req,res)=>{
             res.redirect('/ingresarPaciente');
         }
     }); 
+}
+
+exports.editPaciente=(req,res)=>{
+
+    const nombre = req.body.nombre;
+    const cuireal = req.body.cui;
+    const cui = req.body.cui1;
+    const sexo = req.body.sexo;
+    const edad = req.body.edad;
+    const telefono = req.body.telefono;
     
+
+        conexion.query('UPDATE paciente SET ? WHERE cui  = ?', [{nombrePaciente:nombre,sexo:sexo,edadPaciente:edad,numeroPaciente:telefono,cui:cui}, cuireal],(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/ingresarPaciente');
+        }
+    })
 }

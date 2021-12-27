@@ -49,30 +49,7 @@ router.get('/horariosSecretaria', (req, res) => {
 
 });
 
-//importando la conexion
-router.get('/pp', (req, res) => {
-  
-  const con = require('.././database/db.js');
 
-  const sql = 'SELECT * FROM usuario';
-
-  con.query(sql,function (err,result,fields) {
-    if(err) throw err;
-    console.log(result);
-  });
-
-  con.end;
-/*
-  con.query(sql,(error,results)=>{
-    if(error) throw error;
-    if(results.length>0){
-      res.json(results);
-    }else{
-      res.send('sin resutlados');
-    }
-  });*/
-
-});
 
 let nombre, tokenSession = ''; 
 const conexion = require('.././extra/db');
@@ -167,6 +144,17 @@ router.post('/subirUsuario',crudUsuario.subirUsuario);
 const crudPaciente = require('../views/secretaria/cruds/crudPacienteExamen');
 router.post('/secretaria/ingresarPaciente',crudPaciente.savePaciente);
 
-
+router.get('/editPaciente/:cui', (req, res) => {
+  const cui = req.params.cui;
+  conexion.query('SELECT * FROM paciente WHERE cui=?',[cui],(error,results)=>{
+    if(error){
+      throw error;
+    }else{
+      res.render('./secretaria/cruds/editarPaciente',{user:results[0]});
+    }
+  });
+  
+});
+router.post('/UploadPaciente',crudPaciente.editPaciente);
 
 module.exports = router;
