@@ -11,10 +11,12 @@
             <h1>Modificar Usuario</h1>
             <hr>
             <form action="/subirUsuario" method="post" class="form-control" style="width: 500px; height: 400px">
-                <input id="idUsuario" name="idUsuario" value="<%= usuario.idUsuario %>" hidden>
                 <input id="passwordUsuario" name="passwordUsuario" value="<%= usuario.passwordUsuario %>" hidden>
                 NOMBRE:
-                <input type="text" name="nombreUsuario" class="form-control" value="<%= usuario.nombreUsuario %>"/>
+                <input type="text" name="usuario" class="form-control" value="<%= usuario.usuario%>"/>
+                <br>
+                CORREO:
+                <input type="email" name="correo" class="form-control" value="<%= usuario.correo %>"/>
                 <br>
                 TURNO:
                 <select type="number" name="idTurno" class="form-control" value="">

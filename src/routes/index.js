@@ -111,9 +111,9 @@ router.get('/administrador/roles', (req, res) => {
 //CRUD USUARIO
 const crudUsuario = require('../views/administrador/crud/crudUsuario');
 router.post('/saveUsuario',crudUsuario.saveUsuario);
-router.get('/editarUsuario/:idUsuario',(req,res)=>{
-  const idUsuario=req.params.idUsuario;
-  conexion.query('SELECT * FROM usuario WHERE idUsuario=?',[idUsuario],(error,results)=>{
+router.get('/editarUsuario/:usuario',(req,res)=>{
+  const usuario=req.params.usuario;
+  conexion.query('SELECT * FROM usuario WHERE usuario=?',[usuario],(error,results)=>{
     if(error){
       console.log(error);
   }else{

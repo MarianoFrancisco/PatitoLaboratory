@@ -59,8 +59,8 @@
         <table class="table table-bordered">
         <thead>
             <tr>
-            <th >ID</th>
-            <th class="text-center">Nombre de Usuario</th>
+            <th >Nombre de Usuario</th>
+            <th class="text-center">Correo</th>
             <th class="text-center">Turno</th>
             <th class="text-center">Rol</th>
             <th class="text-center">Editar</th>
@@ -77,12 +77,12 @@
                   }
                     %>
                 <tr>
-                    <th scope="row"><%=usuario.idUsuario%></th>
-                    <td class="text-center"><%=usuario.nombreUsuario%></td>
+                    <td class="text-center"><%=usuario.usuario%></td>
+                    <td class="text-center"><%=usuario.correo%></td>
                     <td class="text-center"><%=usuario.idTurno%></td>
                     <td class="text-center"><%=rol%></td>
                     <td class="text-center">
-                        <a href="/editarUsuario/<%=usuario.idUsuario%>" class="btn btn-primary ">Modificar</a>
+                        <a href="/editarUsuario/<%=usuario.usuario%>" class="btn btn-primary ">Modificar</a>
                         <a href="/administrador/usuarios" class="btn btn-danger" >Suprimir</a>
                     </td>
                 </tr>
@@ -125,11 +125,21 @@
               <input
                 type="text"
                 class="form-control rounded-4"
-                id="nombreUsuario"
-                name="nombreUsuario"
+                id="usuario"
+                name="usuario"
                 required
               />
               <label for="nombreUsuario">Nombre</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="email"
+                class="form-control rounded-4"
+                id="correo"
+                name="correo"
+                required
+              />
+              <label for="correo">Correo</label>
             </div>
             <div class="form-floating mb-3">
                 <input
