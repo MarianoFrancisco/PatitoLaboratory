@@ -31,6 +31,7 @@ const sqlSubExamen = 'SELECT * FROM subExamen';
 // Iniciar sesion en los diferentes usuarios
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
+
 });
 
 //validar credenciales de los usuarios al momento de logiarse
@@ -47,7 +48,7 @@ router.post('/Proceder', async (req, res) => {
       let passwordd = results[0].passwordUsuario;
       console.log(results[0]);
       if (await compare(password,passwordd)) {
-        if(tipo == 1){ res.redirect('/administrador');
+        if(tipo == 1){ await res.redirect('/administrador');
       
         }else if(tipo==2){ await res.render('./secretaria/secretariaIndex');
       
@@ -61,8 +62,6 @@ router.post('/Proceder', async (req, res) => {
       }else{ res.status(404).redirect('/'); }
     }else{ res.status(404).redirect('/'); }
   });
-  conexion.end();
-  
 });
 //rutas de laboratorista
 lab(router , nombre);
@@ -82,7 +81,6 @@ router.get('/administrador/examenes', async(req, res) => {
     else{ res.render('./administrador/examenes',{results:results});
     }
   });
-  conexion.end();
   console.log("Precondiciones");
   console.log("Deben existir examenes");
 
@@ -97,7 +95,6 @@ router.get('/administrador/subExamenes', (req, res) => {
   });
   console.log("Precondiciones");
   console.log("Deben existir subExamenes");
-  conexion.end;
 });
 router.get('/administrador/reportes', (req, res) => {
   res.render('./administrador/reportes', { title: 'Reportes Admin' });
@@ -113,7 +110,6 @@ router.get('/administrador/usuarios', (req, res) => {
   });
   console.log("Precondiciones");
   console.log("Deben haber usuarios");
-  conexion.end;
 });
 router.get('/administrador/corteMes', (req, res) => {
   res.render('./administrador/corteMes', { title: 'Corte del Mes' });
@@ -138,7 +134,6 @@ router.get('/editarUsuario/:usuario',(req,res)=>{
       res.render('./administrador/crud/editarUsuario',{usuario:results[0]});
   }
   })
-  conexion.end();
 })
 router.post('/subirUsuario',crud.subirUsuario);
 //crud examen
@@ -152,7 +147,6 @@ router.get('/editarExamen/:codigoExamen',(req,res)=>{
       res.render('./administrador/crud/editarExamen',{examen:results[0]});
   }
   })
-  conexion.end();
 })
 router.post('/subirExamen',crud.subirExamen);
 //crud sub-examen
