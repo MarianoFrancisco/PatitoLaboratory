@@ -3,7 +3,7 @@ const router = express.Router();
 const lab  = require('./laboratorista');
 const {encrypt, compare } = require('./../extra/encriptar');
 const {tokenSign, verifyToken, decodeSing} = require('./../extra/generateToken');
-const initDB = require('./../extra/db');
+const conexion = require('.././extra/db');
 // Iniciar sesion en los diferentes usuarios
 
 
@@ -25,7 +25,6 @@ router.get('/horariosSecretaria', (req, res) => {
 });
 
 let nombre, tokenSession = ''; 
-const conexion = require('.././extra/db');
 const sqlUsuario = 'SELECT * FROM usuario';
 const sqlExamen = 'SELECT * FROM examen';
 const sqlSubExamen = 'SELECT * FROM subExamen';
@@ -39,8 +38,7 @@ router.post('/Proceder', async (req, res) => {
 	nombre = req.body.nombre|| '';	  
   const password = req.body.password|| '';
 
-  const connect = initDB.connect();
-  connect.query('SELECT * FROM usuario WHERE usuario = ?',[nombre],async (error, results, fields) =>{
+  conexion.query('SELECT * FROM usuario WHERE usuario = ?',[nombre],async (error, results, fields) =>{
     if (error)
       throw error;
     
@@ -49,9 +47,9 @@ router.post('/Proceder', async (req, res) => {
       let passwordd = results[0].passwordUsuario;
       console.log(results[0]);
       if (await compare(password,passwordd)) {
-        if(tipo==1){ res.render('./administrador/administrador', { title: 'Administrador' });
+        if(tipo == 1){ res.redirect('/administrador');
       
-        }else if(tipo==2){ res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
+        }else if(tipo==2){ await res.render('./secretaria/secretariaIndex');
       
         }else if(tipo==3){
           //tokenSession = await tokenSign(result);
@@ -63,11 +61,12 @@ router.post('/Proceder', async (req, res) => {
       }else{ res.status(404).redirect('/'); }
     }else{ res.status(404).redirect('/'); }
   });
-  connect.end();
+  conexion.end();
   
 });
 //rutas de laboratorista
 lab(router , nombre);
+
 
 
 //router administrador
@@ -76,19 +75,21 @@ router.get('/administrador', (req, res) => {
   console.log("Precondiciones");
   console.log("Necesita logearse como administrador");
 });
-router.get('/administrador/examenes', (req, res) => {
-  conexion.query(sqlExamen,function (error,results) {
+router.get('/administrador/examenes', async(req, res) => {
+  
+  await conexion.query(sqlExamen, (error,results) =>{
     if(error) throw error;
-    else{
-      res.render('./administrador/examenes',{results:results});
+    else{ res.render('./administrador/examenes',{results:results});
     }
   });
+  conexion.end();
   console.log("Precondiciones");
   console.log("Deben existir examenes");
-  conexion.end;
+
 });
+
 router.get('/administrador/subExamenes', (req, res) => {
-  conexion.query(sqlSubExamen,function (error,results) {
+  conexion.query(sqlSubExamen,(error,results) => {
     if(error) throw error;
     else{
       res.render('./administrador/subExamenes',{results:results});
@@ -104,10 +105,10 @@ router.get('/administrador/reportes', (req, res) => {
   console.log("Deben haber sido procesados los reportes");
 });
 router.get('/administrador/usuarios', (req, res) => {
-  conexion.query(sqlUsuario,function (error,results) {
+  conexion.query(sqlUsuario, (error,results) => {
     if(error) throw error;
     else{
-      res.render('./administrador/usuarios',{results:results});
+     res.render('./administrador/usuarios',{results:results});
     }
   });
   console.log("Precondiciones");
@@ -137,6 +138,7 @@ router.get('/editarUsuario/:usuario',(req,res)=>{
       res.render('./administrador/crud/editarUsuario',{usuario:results[0]});
   }
   })
+  conexion.end();
 })
 router.post('/subirUsuario',crud.subirUsuario);
 //crud examen
@@ -150,6 +152,7 @@ router.get('/editarExamen/:codigoExamen',(req,res)=>{
       res.render('./administrador/crud/editarExamen',{examen:results[0]});
   }
   })
+  conexion.end();
 })
 router.post('/subirExamen',crud.subirExamen);
 //crud sub-examen
