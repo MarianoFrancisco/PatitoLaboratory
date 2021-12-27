@@ -1,6 +1,6 @@
-const mysqlhost = process.env.MYSQLHOST || 'localhost';
-const mysqluser = process.env.MYSQLUSER || "oliverPatito";
-const mysqlpass = process.env.MYSQLPASS || "Oliver12345";
+const mysqlhost = process.env.MYSQLHOST || '192.168.1.11';
+const mysqluser = process.env.MYSQLUSER || "prueba";
+const mysqlpass = process.env.MYSQLPASS || "prueba";
 const mysqldatabase = process.env.MYSQLDATABASE || "patitobd";
 const mysql = require('mysql');
 
