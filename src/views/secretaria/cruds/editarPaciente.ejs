@@ -12,7 +12,7 @@
             <hr>
             <form action="/UploadPaciente" method="post" class="form-control" style="width: 500px; height: 470px">
                 <br>
-                <input id="cui" name="cui" value="<%=user.cui%>" hidden>
+                <input id="cui" name="cui" value="<%= user.cui%>" hidden>
                 
                 Nombre:
                 <input type="text" name="nombre" class="form-control" value="<%=user.nombrePaciente%>"/>
@@ -32,8 +32,7 @@
                 </select>
                 <br>
                 Cui
-                <input type="number" name="cui1" class="form-control" value="<%=user.cui%>">
-                </input>
+                <h4><%= user.cui%></h4>
                 <br>
                 <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
                 

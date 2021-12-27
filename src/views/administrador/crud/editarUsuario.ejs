@@ -12,9 +12,9 @@
             <hr>
             <form action="/subirUsuario" method="post" class="form-control" style="width: 500px; height: 400px">
                 <input id="passwordUsuario" name="passwordUsuario" value="<%= usuario.passwordUsuario %>" hidden>
+                <input id="usuario" name="usuario" value="<%= usuario.usuario%>" hidden>
                 NOMBRE:
-                <input type="text" name="usuario" class="form-control" value="<%= usuario.usuario%>"/>
-                <br>
+                <h4><%= usuario.usuario%></h4>
                 CORREO:
                 <input type="email" name="correo" class="form-control" value="<%= usuario.correo %>"/>
                 <br>

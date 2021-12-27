@@ -23,10 +23,10 @@
                 <div class="navi">
                     <ul>
                         <li><a href="/administrador"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
-                        <li><a href="/administrador/examenes"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Examenes</span></a></li>
-                        <li><a href="/administrador/subExamenes"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">SubExamenes</span></a></li>
+                        <li ><a href="/administrador/examenes"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Examenes</span></a></li>
+                        <li class="active"><a href="/administrador/subExamenes"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">SubExamenes</span></a></li>
                         <li><a href="/administrador/reportes"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Historial</span></a></li>
-                        <li class="active"><a href="/administrador/usuarios"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuarios</span></a></li>
+                        <li><a href="/administrador/usuarios"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuarios</span></a></li>
                         <li><a href="/administrador/corteMes"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Corte del mes</span></a></li>
                         <li><a href="/administrador/roles"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Roles</span></a></li>
                     </ul>
@@ -52,39 +52,29 @@
                 <div class="user-dashboard">
 
         <hr>
+        <H1>SUB-EXAMENES</H1>
         <button class="btn btn-primary btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#modalSignin1">
-            Ingresar Usuario
+            Ingresar sub-examen
         </button>
             <br>
             <br>             
         <table class="table table-bordered">
         <thead>
             <tr>
-            <th >Nombre de Usuario</th>
-            <th class="text-center">Correo</th>
-            <th class="text-center">Turno</th>
-            <th class="text-center">Rol</th>
+            <th >Tipo</th>
+            <th class="text-center">Nombre</th>
+            <th class="text-center">Codigo Examen</th>
             <th class="text-center">Editar</th>
             </tr>
         </thead> 
-        <tbody><%var rol;%>
-                <% results.forEach((usuario)=>{
-                  if(usuario.tipoUsuario==1){
-                    rol='Administrador';
-                  }else if(usuario.tipoUsuario==2){
-                    rol='Secretaria';
-                  }else if(usuario.tipoUsuario==3){
-                    rol='Laboratorista';
-                  }
-                    %>
+        <tbody>
+          <% results.forEach((subExamen)=>{%>
                 <tr>
-                    <td class="text-center"><%=usuario.usuario%></td>
-                    <td class="text-center"><%=usuario.correo%></td>
-                    <td class="text-center"><%=usuario.idTurno%></td>
-                    <td class="text-center"><%=rol%></td>
+                    <th scope="row"><%=subExamen.tipo%></th>
+                    <td class="text-center"><%=subExamen.nombreSub%></td>
+                    <td class="text-center"><%=subExamen.codigoExamen%></td>
                     <td class="text-center">
-                        <a href="/editarUsuario/<%=usuario.usuario%>" class="btn btn-primary ">Modificar</a>
-                        <a href="/administrador/usuarios" class="btn btn-danger" >Suprimir</a>
+                        <a href="/administrador/subExamenes" class="btn btn-danger" >Suprimir</a>
                     </td>
                 </tr>
                 <%})%>
@@ -92,13 +82,12 @@
                     </div>
                 </div>
             </div>
-            <script>
-              console.log("Precondiciones");
-  console.log("Deben haber usuarios");
-              </script>
         </div>
 
     </div>
+
+    
+
     <!-- Modal -->
     <div
     class="modal modal-signin bg-secondary py-5"
@@ -111,7 +100,7 @@
       <div class="modal-content rounded-5 shadow">
         <div class="modal-header p-5 pb-4 border-bottom-0">
           <!-- <h5 class="modal-title">Modal title</h5> -->
-          <h2 class="fw-bold mb-0">Formulario Agregar Usuario</h2>
+          <h2 class="fw-bold mb-0">Formulario Agregar Examen</h2>
           <button
             type="button"
             class="btn-close"
@@ -121,66 +110,49 @@
         </div>
 
         <div class="modal-body p-5 pt-0">
-          <form action="/saveUsuario" method="POST" class="was-validated">
+          <form action="/saveSubExamen" method="POST" class="was-validated">
             <div class="form-floating mb-3">
-              <input
+              <select
                 type="text"
                 class="form-control rounded-4"
-                id="usuario"
-                name="usuario"
+                id="tipo"
+                name="tipo"
                 required
-              />
-              <label for="nombreUsuario">Nombre</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                type="email"
-                class="form-control rounded-4"
-                id="correo"
-                name="correo"
-                required
-              />
-              <label for="correo">Correo</label>
+              ><option value="Completo">Completo</option> 
+              <option value="Macroscopico">Macroscopico</option> 
+              <option value="Microscopico">Microscopico</option>
+            </select>
+              <label for="tipo">TIPO</label>
             </div>
             <div class="form-floating mb-3">
                 <input
                   type="text"
                   class="form-control rounded-4"
-                  id="passwordUsuario"
-                  name="passwordUsuario"
+                  id="nombreSub"
+                  name="nombreSub"
                   required
                 />
-                <label for="passwordUsuario">Contraseña</label>
+                <label for="nombreSub">Nombre de sub-examen</label>
               </div>
-              <div class="form-floating mb-3">
-                <select 
-                  type="number"
-                  class="form-control rounded-4"
-                  id="idTurno"
-                  name="idTurno"
-                >
-                  <option value="1">1</option> 
-               </select>
-              <label for="idTurno">Turno</label>
-            </div>
             <div class="form-floating mb-3">
-              <select 
+              <select
                 type="number"
                 class="form-control rounded-4"
-                id="tipoUsuario"
-                name="tipoUsuario"
-                >
-                  <option value="1">1</option> 
-                  <option value="2">2</option> 
-                  <option value="3">3</option>
-               </select>
-              <label for="tipoUsuario">Rol de usuario</label>
+                id="codigoExamen"
+                name="codigoExamen"
+                required
+              >
+              <option value="100">100</option> 
+              <option value="101">101</option> 
+              <option value="102">102</option>
+            </select>
+              <label for="codigoExamen">Codigo</label>
             </div>
             <button
               class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"
               type="submit"
             >
-              Agregar Usuario
+              Agregar Examen
             </button>
             <hr class="my-4" />
           </form>
@@ -192,5 +164,8 @@
     integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
     crossorigin="anonymous"
     ></script>
-    
+    <script>
+      console.log("Precondiciones");
+    console.log("Deben existir examenes");
+      </script>
 </body>

@@ -1,7 +1,7 @@
 const mysqlhost = process.env.MYSQLHOST || '192.168.1.11';
 const mysqluser = process.env.MYSQLUSER || "patitoOliver";
 const mysqlpass = process.env.MYSQLPASS || "Oliver12345";
-const mysqldatabase = process.env.MYSQLDATABASE || "patitobd";
+const mysqldatabase = process.env.MYSQLDATABASE || "patitoBD";
 const mysql = require('mysql');
 
 const connection = mysql.createConnection({
@@ -14,7 +14,7 @@ const connection = mysql.createConnection({
 connection.connect(function(error){
    if(error){
       console.log('El error en la conexion es: '+ error);
-      return
+      return;
    }
    console.log('Nos conectamos exitosamente.');
 });

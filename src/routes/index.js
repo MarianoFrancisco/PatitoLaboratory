@@ -3,17 +3,7 @@ const router = express.Router();
 const lab  = require('./laboratorista');
 const {encrypt, compare } = require('./../extra/encriptar');
 const {tokenSign, verifyToken, decodeSing} = require('./../extra/generateToken');
-const body_parser = require('body-parser');
-let laboratorista = {
-  rol: 'laboratorista',
-  nombre: 'Ale',
-  password: '$2a$10$bTXb/uRl5aFF5nxHtlD04.Q6YaoanfQMrySIRD4yIpFo.o7SrsqHW'
-}
-let administrador = 'Marco';
-let passAdministrador='1234';
-let secretaria = 'Juana';
-let passSecretaria='1234';
-
+const conexion = require('.././extra/db');
 // Iniciar sesion en los diferentes usuarios
 
 //Secretaria
@@ -42,7 +32,6 @@ router.get('/resultadosSecretaria', (req, res) => {
   res.render('./secretaria/resultadosSecretaria', { title: 'Resultados' });
 });
 
-
 router.get('/horariosSecretaria', (req, res) => {
   
   res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
@@ -52,11 +41,13 @@ router.get('/horariosSecretaria', (req, res) => {
 
 
 let nombre, tokenSession = ''; 
-const conexion = require('.././extra/db');
-const sql = 'SELECT * FROM usuario';
+const sqlUsuario = 'SELECT * FROM usuario';
+const sqlExamen = 'SELECT * FROM examen';
+const sqlSubExamen = 'SELECT * FROM subExamen';
 // Iniciar sesion en los diferentes usuarios
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
+
 });
 
 //validar credenciales de los usuarios al momento de logiarse
@@ -64,26 +55,33 @@ router.post('/Proceder', async (req, res) => {
 	nombre = req.body.nombre|| '';	  
   const password = req.body.password|| '';
 
-
-  if(nombre==administrador&&password==passAdministrador){
-    res.render('./administrador/administrador', { title: 'Administrador' });
-    console.log("Precondiciones");
-    console.log("Necesita logearse como administrador");
-  }else if(nombre==secretaria&&password==passSecretaria){
-    res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
-  }else if(nombre==laboratorista.nombre && await compare(password, laboratorista.password)){
-
-    tokenSession = await tokenSign(laboratorista);
-    console.log(tokenSession);
-    res.redirect('/laboratorista');
-    //res.send({data: user, tokenSession});
-
-  }else{
-    res.status(404).redirect('/');
-  }
+  conexion.query('SELECT * FROM usuario WHERE usuario = ?',[nombre],async (error, results, fields) =>{
+    if (error)
+      throw error;
+    
+    if(results[0] != undefined){
+      let tipo = results[0].tipoUsuario;
+      let passwordd = results[0].passwordUsuario;
+      console.log(results[0]);
+      if (await compare(password,passwordd)) {
+        if(tipo == 1){ await res.redirect('/administrador');
+      
+        }else if(tipo==2){ await res.render('./secretaria/secretariaIndex');
+      
+        }else if(tipo==3){
+          //tokenSession = await tokenSign(result);
+          //console.log(tokenSession);
+          res.redirect('/laboratorista');
+          //res.send({data: user, tokenSession});
+      
+        }else{ res.status(404).redirect('/'); }
+      }else{ res.status(404).redirect('/'); }
+    }else{ res.status(404).redirect('/'); }
+  });
 });
 //rutas de laboratorista
-lab(router , laboratorista.nombre );
+lab(router , nombre);
+
 
 
 //router administrador
@@ -92,10 +90,27 @@ router.get('/administrador', (req, res) => {
   console.log("Precondiciones");
   console.log("Necesita logearse como administrador");
 });
-router.get('/administrador/examenes', (req, res) => {
-  res.render('./administrador/examenes', { title: 'Examenes Admin' });
+router.get('/administrador/examenes', async(req, res) => {
+  
+  await conexion.query(sqlExamen, (error,results) =>{
+    if(error) throw error;
+    else{ res.render('./administrador/examenes',{results:results});
+    }
+  });
   console.log("Precondiciones");
   console.log("Deben existir examenes");
+
+});
+
+router.get('/administrador/subExamenes', (req, res) => {
+  conexion.query(sqlSubExamen,(error,results) => {
+    if(error) throw error;
+    else{
+      res.render('./administrador/subExamenes',{results:results});
+    }
+  });
+  console.log("Precondiciones");
+  console.log("Deben existir subExamenes");
 });
 router.get('/administrador/reportes', (req, res) => {
   res.render('./administrador/reportes', { title: 'Reportes Admin' });
@@ -103,15 +118,14 @@ router.get('/administrador/reportes', (req, res) => {
   console.log("Deben haber sido procesados los reportes");
 });
 router.get('/administrador/usuarios', (req, res) => {
-  conexion.query(sql,function (error,results) {
+  conexion.query(sqlUsuario, (error,results) => {
     if(error) throw error;
     else{
-      res.render('./administrador/usuarios',{results:results});
+     res.render('./administrador/usuarios',{results:results});
     }
   });
   console.log("Precondiciones");
   console.log("Deben haber usuarios");
-  conexion.end;
 });
 router.get('/administrador/corteMes', (req, res) => {
   res.render('./administrador/corteMes', { title: 'Corte del Mes' });
@@ -124,10 +138,10 @@ router.get('/administrador/roles', (req, res) => {
   console.log("Precondiciones");
   console.log("Sin precondiciones");
 });
+
 //CRUD USUARIO
-const crudUsuario = require('../views/administrador/crud/crudUsuario');
-const { route } = require('express/lib/application');
-router.post('/saveUsuario',crudUsuario.saveUsuario);
+const crud = require('../views/administrador/crud/crud');
+router.post('/saveUsuario',crud.saveUsuario);
 router.get('/editarUsuario/:usuario',(req,res)=>{
   const usuario=req.params.usuario;
   conexion.query('SELECT * FROM usuario WHERE usuario=?',[usuario],(error,results)=>{
@@ -138,7 +152,9 @@ router.get('/editarUsuario/:usuario',(req,res)=>{
   }
   })
 })
-router.post('/subirUsuario',crudUsuario.subirUsuario);
+router.post('/subirUsuario',crud.subirUsuario);
+//crud examen
+router.p
 
 // CRUD SECRETARIA
 //Agregar paciente
@@ -174,4 +190,20 @@ const cui = req.params.cui;
 });
 router.post('/ExamenPaciente',crudPaciente.realizarExamen);
 
+router.post('/subirUsuario',crud.subirUsuario);
+//crud examen
+router.post('/saveExamen',crud.saveExamen);
+router.get('/editarExamen/:codigoExamen',(req,res)=>{
+  const examen=req.params.codigoExamen;
+  conexion.query('SELECT * FROM examen WHERE codigoExamen=?',[examen],(error,results)=>{
+    if(error){
+      console.log(error);
+  }else{
+      res.render('./administrador/crud/editarExamen',{examen:results[0]});
+  }
+  })
+})
+router.post('/subirExamen',crud.subirExamen);
+//crud sub-examen
+router.post('/saveSubExamen',crud.saveSubExamen);
 module.exports = router;
