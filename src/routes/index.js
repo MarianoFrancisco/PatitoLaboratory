@@ -141,9 +141,11 @@ router.get('/editarUsuario/:usuario',(req,res)=>{
 router.post('/subirUsuario',crudUsuario.subirUsuario);
 
 // CRUD SECRETARIA
+//Agregar paciente
 const crudPaciente = require('../views/secretaria/cruds/crudPacienteExamen');
 router.post('/secretaria/ingresarPaciente',crudPaciente.savePaciente);
 
+//Editar paciente
 router.get('/editPaciente/:cui', (req, res) => {
   const cui = req.params.cui;
   conexion.query('SELECT * FROM paciente WHERE cui=?',[cui],(error,results)=>{
@@ -156,5 +158,20 @@ router.get('/editPaciente/:cui', (req, res) => {
   
 });
 router.post('/UploadPaciente',crudPaciente.editPaciente);
+
+//Agregar Examen
+router.get('/PacienteExamen/:cui', (req, res) => {
+const cui = req.params.cui;
+  
+  conexion.query('SELECT * FROM paciente WHERE cui=?',[cui],(error,results)=>{
+    if(error){
+      throw error;
+    }else{
+      res.render('./secretaria/cruds/realizarExamen',{user:results[0]});
+    }
+  });
+  
+});
+router.post('/ExamenPaciente',crudPaciente.realizarExamen);
 
 module.exports = router;

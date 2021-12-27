@@ -75,6 +75,7 @@
                     <td class="text-center"><%= user.numeroPaciente%></td>
                     <td class="text-center">
                         <a href="/editPaciente/<%= user.cui%>" class="btn btn-primary">Editar</a>
+                        <a href="/PacienteExamen/<%= user.cui%>" class="btn btn-primary">Registrar examen</a>
                         <a href="" class="btn btn-danger">Elimiar</a>
                     </td>
                 </tr>
@@ -148,10 +149,13 @@
                 class="form-control rounded-4"
                 id="Sexo"
                 name="sexo"
+                onchange="var id = document.querySelector('select');
+                var idExamens = id.value;
+                console.log(idExamens);"
                 >
                   <option value="M">Masculino</option> 
                   <option value="F">Femenino</option> 
-               </select>
+               </select >
               <label for="tipoUsuario">Sexo</label>
             </div>
             <div class="form-floating mb-3">
@@ -173,16 +177,6 @@
                 required
               />
               <label for="floatingPhone">Número telefonico</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control rounded-4"
-                id="Examen"
-                name="examen"
-                required
-              />
-              <label for="floatingPhone">Examen a realizar</label>
             </div>
             <button
               class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"
