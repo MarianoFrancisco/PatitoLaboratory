@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Modificar Usuario</title>
+        <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <% if (examen) { %>
+            <div class="container">
+                <h1>Modificar Examen</h1>
+                <hr>
+                <form action="/subirExamen" method="post" class="form-control" style="width: 500px; height: 400px">
+                    <input id="codigoExamen" name="codigoExamen" value="<%= examen.codigoExamen %>" hidden>
+                    <input id="nombreMuestra" name="nombreMuestra" value="<%= examen.nombreMuestra %>" hidden>
+                    <input id="nombreExamen" name="nombreExamen" value="<%= examen.nombreExamen%>" hidden>
+                    NOMBRE: 
+                    <h4><%= examen.nombreExamen%></h4>
+                    PRECIO:
+                    <input type="number" step="any" name="precioExamen" class="form-control" value="<%= examen.precioExamen%>">
+                    <br>
+                     <br>
+                    <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
+                    <a href="/administrador/examenes">Regresar</a>
+                </form>
+            </div>
+            <% } %>
+    </body>
+</html>
