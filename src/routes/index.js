@@ -38,6 +38,7 @@ router.post('/Proceder', async (req, res) => {
 	nombre = req.body.nombre|| '';	  
   const password = req.body.password|| '';
 
+
   conexion.query('SELECT * FROM usuario WHERE usuario = ?',[nombre],async (error, results, fields) =>{
     if (error)
       throw error;
@@ -61,7 +62,6 @@ router.post('/Proceder', async (req, res) => {
       }else{ res.status(404).redirect('/'); }
     }else{ res.status(404).redirect('/'); }
   });
-  conexion.end();
   
 });
 //rutas de laboratorista
