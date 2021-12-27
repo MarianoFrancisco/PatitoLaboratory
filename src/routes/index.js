@@ -45,11 +45,9 @@ router.post('/Proceder', async (req, res) => {
       let passwordd = results[0].passwordUsuario;
       console.log(results[0]);
       if (await compare(password,passwordd)) {
-        if(tipo==1){
-          res.render('./administrador/administrador', { title: 'Administrador' });
+        if(tipo==1){ res.render('./administrador/administrador', { title: 'Administrador' });
       
-        }else if(tipo==2){
-          res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
+        }else if(tipo==2){ res.render('./secretaria/secretariaIndex', { title: 'Secretaria' });
       
         }else if(tipo==3){
           //tokenSession = await tokenSign(result);
