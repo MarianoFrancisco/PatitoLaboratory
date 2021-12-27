@@ -24,7 +24,8 @@
                     <ul>
                         <li><a href="/administrador"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
                         <li class="active"><a href="/administrador/examenes"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Examenes</span></a></li>
-                        <li><a href="/administrador/reportes"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Reportes</span></a></li>
+                        <li><a href="/administrador/subExamenes"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">SubExamenes</span></a></li>
+                        <li><a href="/administrador/reportes"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Historial</span></a></li>
                         <li><a href="/administrador/usuarios"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Usuarios</span></a></li>
                         <li><a href="/administrador/corteMes"><i class="fa fa-calendar" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Corte del mes</span></a></li>
                         <li><a href="/administrador/roles"><i class="fa fa-cog" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Roles</span></a></li>
@@ -63,19 +64,23 @@
             <th >Codigo</th>
             <th class="text-center">Nombre</th>
             <th class="text-center">Precio</th>
+            <th class="text-center">Muestra</th>
             <th class="text-center">Editar</th>
             </tr>
         </thead> 
         <tbody>
+          <% results.forEach((examen)=>{%>
                 <tr>
-                    <th scope="row"></th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+                    <th scope="row"><%=examen.codigoExamen%></th>
+                    <td class="text-center"><%=examen.nombreExamen%></td>
+                    <td class="text-center"><%=examen.precioExamen%></td>
+                    <td class="text-center"><%=examen.nombreMuestra%></td>
                     <td class="text-center">
-                        <a href="" class="btn btn-primary ">Modificar</a>
+                        <a href="/editarExamen/<%=examen.codigoExamen%>"class="btn btn-primary ">Modificar</a>
                         <a href="/administrador/examenes" class="btn btn-danger" >Suprimir</a>
                     </td>
                 </tr>
+                <%})%>
         </tbody>            
                     </div>
                 </div>
@@ -108,37 +113,47 @@
         </div>
 
         <div class="modal-body p-5 pt-0">
-          <form action="/administrador/usuarios" class="was-validated">
+          <form action="/saveExamen" method="POST" class="was-validated">
             <div class="form-floating mb-3">
               <input
                 type="number"
                 class="form-control rounded-4"
-                id="floatingInputName"
-                name="nombre"
+                id="codigoExamen"
+                name="codigoExamen"
                 required
               />
-              <label for="floatingInputName">Codigo</label>
+              <label for="codigoExamen">Codigo</label>
             </div>
             <div class="form-floating mb-3">
                 <input
                   type="text"
                   class="form-control rounded-4"
-                  id="floatingInputName"
-                  name="nombre"
+                  id="nombreExamen"
+                  name="nombreExamen"
                   required
                 />
-                <label for="floatingInputName">Nombre de examen</label>
+                <label for="nombreExamen">Nombre de examen</label>
               </div>
             <div class="form-floating mb-3">
               <input
                 type="number"
                 step="any"
                 class="form-control rounded-4"
-                id="floatingEdad"
-                name="edad"
+                id="precioExamen"
+                name="precioExamen"
                 required
               />    
-              <label for="floatingPhone">Precio</label>
+              <label for="precioExamen">Precio</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control rounded-4"
+                id="nombreMuestra"
+                name="nombreMuestra"
+                required
+              />
+              <label for="nombreMuestra">Nombre de muestra</label>
             </div>
             <button
               class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"

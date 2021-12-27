@@ -14,7 +14,9 @@ app.set('view engine', 'ejs');
 
 // middlewares
 app.use(morgan('dev'));
-
+//guardar datos
+app.use(express.urlencoded({extended:false}));
+app.use(express.json());
 // routes
 app.use(require('./routes'));
 
