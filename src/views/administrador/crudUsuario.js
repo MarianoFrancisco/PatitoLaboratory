@@ -4,5 +4,11 @@ exports.saveUsuario= (req,res)=>{
     const passwordUsuario = req.body.passwordUsuario;
     const tipoUsuario = req.body.tipoUsuario;
     const idTurno = req.body.idTurno;
-    console.log(nombreUsuario+""+passwordUsuario);
+    conexion.query('INSERT INTO usuario SET ?',{nombreUsuario:nombreUsuario,passwordUsuario:passwordUsuario,tipoUsuario:tipoUsuario,idTurno:idTurno},(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/administrador/usuarios');
+        }
+    })
 }

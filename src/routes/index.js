@@ -3,7 +3,7 @@ const router = express.Router();
 const lab  = require('./laboratorista');
 const {encrypt, compare } = require('./../extra/encriptar');
 const {tokenSign, verifyToken, decodeSing} = require('./../extra/generateToken');
-
+const body_parser = require('body-parser');
 let laboratorista = {
   rol: 'laboratorista',
   nombre: 'Ale',
