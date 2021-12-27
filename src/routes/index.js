@@ -16,7 +16,6 @@ let passSecretaria='1234';
 
 // Iniciar sesion en los diferentes usuarios
 
-
 //Secretaria
 router.get('/secretariaIndex', (req, res) => {
   res.render('./secretaria/secretariaIndex', { title: 'Inicio' });
@@ -32,7 +31,34 @@ router.get('/resultadosSecretaria', (req, res) => {
 
 
 router.get('/horariosSecretaria', (req, res) => {
+  
   res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
+
+});
+
+//importando la conexion
+router.get('/pp', (req, res) => {
+  
+  const con = require('.././database/db.js');
+
+  const sql = 'SELECT * FROM usuario';
+
+  con.query(sql,function (err,result,fields) {
+    if(err) throw err;
+    console.log(result);
+  });
+
+  con.end;
+/*
+  con.query(sql,(error,results)=>{
+    if(error) throw error;
+    if(results.length>0){
+      res.json(results);
+    }else{
+      res.send('sin resutlados');
+    }
+  });*/
+
 });
 
 let nombre, tokenSession = ''; 
