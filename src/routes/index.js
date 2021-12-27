@@ -22,7 +22,20 @@ router.get('/secretariaIndex', (req, res) => {
 });
 
 router.get('/ingresarPaciente', (req, res) => {
-  res.render('./secretaria/ingresarPaciente', { title: 'Registro' });
+  
+  
+  const connection = require('.././extra/db');
+  const sql = 'SELECT * FROM paciente';
+
+  let sqlPaciente = ''
+  connection.query(sql,function (error,results) {
+    if(error) throw error;
+    else{
+      res.render('./secretaria/ingresarPaciente',{results:results});
+    }
+  });
+  //res.render('./secretaria/ingresarPaciente', { title: 'Registro' });
+  
 });
 
 router.get('/resultadosSecretaria', (req, res) => {
@@ -136,6 +149,7 @@ router.get('/administrador/roles', (req, res) => {
 });
 //CRUD USUARIO
 const crudUsuario = require('../views/administrador/crud/crudUsuario');
+const { route } = require('express/lib/application');
 router.post('/saveUsuario',crudUsuario.saveUsuario);
 router.get('/editarUsuario/:idUsuario',(req,res)=>{
   const idUsuario=req.params.idUsuario;
@@ -148,4 +162,11 @@ router.get('/editarUsuario/:idUsuario',(req,res)=>{
   })
 })
 router.post('/subirUsuario',crudUsuario.subirUsuario);
+
+// CRUD SECRETARIA
+const crudPaciente = require('../views/secretaria/cruds/crudPacienteExamen');
+router.post('/secretaria/ingresarPaciente',crudPaciente.savePaciente);
+
+
+
 module.exports = router;

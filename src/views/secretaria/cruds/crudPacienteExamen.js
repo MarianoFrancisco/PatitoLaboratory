@@ -1,0 +1,21 @@
+const conexion = require('../../.././extra/db');
+
+exports.savePaciente=(req,res)=>{
+    const nombre = req.body.nombre;
+    const apellido = req.body.apellido;
+    const nombreCompleto = nombre +" "+  apellido;
+    const cui = req.body.cui;
+    const sexo = req.body.sexo;
+    const edad = req.body.edad;
+    const telefono = req.body.telefono;
+    const examen = req.body.examen;
+    
+    conexion.query('INSERT INTO paciente SET ?',{nombrePaciente:nombreCompleto,sexo:sexo,edadPaciente:edad,cui:cui,edadPaciente:edad,numeroPaciente:telefono},(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/ingresarPaciente');
+        }
+    }); 
+    
+}
