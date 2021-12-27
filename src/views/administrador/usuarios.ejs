@@ -82,7 +82,7 @@
                     <td class="text-center"><%=usuario.idTurno%></td>
                     <td class="text-center"><%=rol%></td>
                     <td class="text-center">
-                        <a href="" class="btn btn-primary ">Modificar</a>
+                        <a href="/editarUsuario/<%=usuario.idUsuario%>" class="btn btn-primary ">Modificar</a>
                         <a href="/administrador/usuarios" class="btn btn-danger" >Suprimir</a>
                     </td>
                 </tr>
@@ -142,23 +142,27 @@
                 <label for="passwordUsuario">Contraseña</label>
               </div>
               <div class="form-floating mb-3">
-                <input
+                <select 
                   type="number"
                   class="form-control rounded-4"
                   id="idTurno"
                   name="idTurno"
-                  required
-                />
+                >
+                  <option value="1">1</option> 
+               </select>
               <label for="idTurno">Turno</label>
             </div>
             <div class="form-floating mb-3">
-              <input
+              <select 
                 type="number"
                 class="form-control rounded-4"
                 id="tipoUsuario"
                 name="tipoUsuario"
-                required
-              />
+                >
+                  <option value="1">1</option> 
+                  <option value="2">2</option> 
+                  <option value="3">3</option>
+               </select>
               <label for="tipoUsuario">Rol de usuario</label>
             </div>
             <button

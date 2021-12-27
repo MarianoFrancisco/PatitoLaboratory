@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Modificar Usuario</title>
+        <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <% if (usuario) { %>
+        <div class="container">
+            <h1>Modificar Usuario</h1>
+            <hr>
+            <form action="/subirUsuario" method="post" class="form-control" style="width: 500px; height: 400px">
+                <input id="idUsuario" name="idUsuario" value="<%= usuario.idUsuario %>" hidden>
+                <input id="passwordUsuario" name="passwordUsuario" value="<%= usuario.passwordUsuario %>" hidden>
+                NOMBRE:
+                <input type="text" name="nombreUsuario" class="form-control" value="<%= usuario.nombreUsuario %>"/>
+                <br>
+                TURNO:
+                <select type="number" name="idTurno" class="form-control" value="">
+                    <option <%= usuario.idTurno=="1" ? "selected" : "" %> value='1'>1</option> 
+                </select>
+                <br>
+                ROL:
+                <select type="number" name="tipoUsuario" class="form-control" value="">
+                    <option <%= usuario.tipoUsuario=='1' ? "selected" : '' %> value='1'>Administrador</option> 
+                    <option <%= usuario.tipoUsuario=='2' ? "selected" : '' %> value='2'>Secretaria</option> 
+                    <option <%= usuario.tipoUsuario=='3' ? "selected" : '' %> value='3'>Laboratorista</option>
+                </select>
+                 <br>
+                <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
+                
+                <a href="/administrador/usuarios">Regresar</a>
+            </form>
+        </div>
+        <% } %>
+    </body>
+</html>

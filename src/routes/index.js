@@ -135,6 +135,17 @@ router.get('/administrador/roles', (req, res) => {
   console.log("Sin precondiciones");
 });
 //CRUD USUARIO
-const crudUsuario = require('.././views/administrador/crudUsuario');
+const crudUsuario = require('../views/administrador/crud/crudUsuario');
 router.post('/saveUsuario',crudUsuario.saveUsuario);
+router.get('/editarUsuario/:idUsuario',(req,res)=>{
+  const idUsuario=req.params.idUsuario;
+  conexion.query('SELECT * FROM usuario WHERE idUsuario=?',[idUsuario],(error,results)=>{
+    if(error){
+      console.log(error);
+  }else{
+      res.render('./administrador/crud/editarUsuario',{usuario:results[0]});
+  }
+  })
+})
+router.post('/subirUsuario',crudUsuario.subirUsuario);
 module.exports = router;
