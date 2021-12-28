@@ -7,6 +7,7 @@
 
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
 
     <% if (user){ %>
@@ -25,47 +26,46 @@
                 <input type="date" id="txtfecha" name="txtfecha" class="form-control" required />
                 <br>
 
-                tipo Examen -- codigo examen genral
+                Examen a realizar
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-                <select ONCHANGE="location = this.options[this.selectedIndex].value;" name="examen" id="examen" class="form-control" required>
+                <select name="examen" id="examen" class="form-control" required>
                     <option value="" disabled selected>Seleccione un examen</option>
                     <% examen.forEach((examen)=>{
                         %>
-                        <option value='<%=examen.nombreExamen%>'>
+                        <option value='<%=examen.codigoExamen%>'>
                             <%=examen.nombreExamen%>
                         </option>
                         <% })%>
-                </select> 
-                <script type="text/javascript">$("#examen").change(function () {
+                </select>
+
+                <script>$("#examen").change(function () {
+
                     
-                        var estado = $("#examen").val();
-                        
-                        if (estado == "Hematologia") {
-                            let elemento = document.createElement("option");
 
-                            let nombreLista = document.createTextNode("Completo");
-                            elemento.setAttribute("value", "Completo");
+                        //var selecionado = document.getElementById("examen");
+                        //var opcion = selecionado.options[selecionado.selectedIndex].text;
 
-                            elemento.appendChild(nombreLista);
+                        if (document.getElementById("examen").value == "Hematologia") {
 
-                            document.getElementById("Tipo").appendChild(elemento);
+                            //deshabilitar micro y macro
+
+
+
+                            // habilitar solo completo
+                            console.log("Estoy en Completo")
+                            var padre = document.getElementById("tipoExamen")[1].removeAttribute("disabled");
+
+
+
 
                         } else {
+                            //deshabilitar completo
 
-                            let elemento = document.createElement("option");
-                            let elemento1 = document.createElement("option");
 
-                            let nombreLista = document.createTextNode("Microscopico");
-                            let nombreLista1 = document.createTextNode("Macroscopico");
-
-                            elemento.appendChild(nombreLista);
-                            elemento1.appendChild(nombreLista1);
-
-                            elemento.setAttribute("value", "Microscopio");
-                            elemento1.setAttribute("value", "Macroscopio");
-
-                            document.getElementById("Tipo").appendChild(elemento);
-                            document.getElementById("Tipo").appendChild(elemento1);
+                            //habilitar micro y macro
+                            console.log("micro macro");
+                            var padre = document.getElementById("tipoExamen")[2].removeAttribute("disabled");
+                            var padre = document.getElementById("tipoExamen")[3].removeAttribute("disabled");
 
                         }
 
@@ -74,16 +74,20 @@
 
                 <br>
 
-                -- micro macro
-                <select type="text" name="tipoExamen" id="Tipo" class="form-control" required>
+                Tipo del examen
+                <select type="text" name="tipoExamen" id="tipoExamen" class="form-control" required>
                     <option value="" selected disabled hidden>-- Seleccionar --</option>
+                    <option value="Completo" > Completo </option>
+                    <option value="Microscopico" > Microscopico </option>
+                    <option value="Macroscopico" > Macroscopico </option>
 
                 </select>
                 
                 <br>
-                tipo Examen -- codigo examen genral
+                Nombre del subexamen
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-                <select name="examen" id="examen" class="form-control" required>
+
+                <select name="Subexamen" id="Subexamen" class="form-control" required>
                     <option value="" disabled selected>Seleccione un examen</option>
                     <%completo.forEach((subExamen)=>{
                         %>

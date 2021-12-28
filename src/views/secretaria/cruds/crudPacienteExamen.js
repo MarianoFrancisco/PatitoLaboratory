@@ -54,15 +54,16 @@ exports.editPaciente=(req,res)=>{
 
 exports.realizarExamen=(req,res)=>{
 
-    const idExamen = req.body.idExamen;
-    const cuireal = req.body.cui;
-    const cui = req.body.cui1;
-    const sexo = req.body.sexo;
-    const edad = req.body.edad;
-    const telefono = req.body.telefono;
+    
+    const cui = req.body.cui;
+    const txtfecha = req.body.txtfecha;
+    const codigoExamen = req.body.examen;
+    const nombreSub = req.body.Subexamen;
+    const tipo = req.body.tipoExamen;
+    
     
 
-        conexion.query('INSERT INTO examenRealizar SET ?', [{nombrePaciente:nombre,sexo:sexo,edadPaciente:edad,numeroPaciente:telefono,cui:cui}, cuireal],(error,results)=>{
+      conexion.query('INSERT INTO examenRealizar SET ?', {fechaExamen:txtfecha,cui:cui,nombreSubExamen:nombreSub,tipo:tipo,codigoExamen:codigoExamen},(error,results)=>{
         if(error){
             console.log(error);
         }else{
