@@ -32,13 +32,13 @@ exports.saveUsuario= async (req,res)=>{
         }
     })
 }
-exports.subirUsuario=(req,res)=>{
+exports.subirUsuario= async (req,res)=>{
     const usuario= req.body.usuario;
     const correo = req.body.correo;
     const passwordUsuario = req.body.passwordUsuario;
     const tipoUsuario = req.body.tipoUsuario;
     const idTurno = req.body.idTurno;
-    const estado = req.body.estado;
+    const estado = await req.body.estadoUsuario;
     const estado2 = estado == 'on';
 
     conexion.query('UPDATE usuario SET ? WHERE usuario= ?',[{correo:correo,passwordUsuario:passwordUsuario,tipoUsuario:tipoUsuario,idTurno:idTurno,estado: estado2},usuario],(error,results)=>{
