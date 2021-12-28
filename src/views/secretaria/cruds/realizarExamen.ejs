@@ -7,6 +7,7 @@
 
     <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 </head>
+
 <body>
 
     <% if (user){ %>
@@ -31,7 +32,7 @@
                     <option value="" disabled selected>Seleccione un examen</option>
                     <% examen.forEach((examen)=>{
                         %>
-                        <option value='<%=examen.nombreExamen%>'>
+                        <option value='<%=examen.codigoExamen%>'>
                             <%=examen.nombreExamen%>
                         </option>
                         <% })%>
@@ -39,51 +40,54 @@
 
                 <script>$("#examen").change(function () {
 
-                        
+                    
 
                         //var selecionado = document.getElementById("examen");
                         //var opcion = selecionado.options[selecionado.selectedIndex].text;
-                        
-                        if(document.getElementById("examen").value=="Hematologia"){
-                            
+
+                        if (document.getElementById("examen").value == "Hematologia") {
+
                             //deshabilitar micro y macro
-                            
-                            
-                            
+
+
+
                             // habilitar solo completo
                             console.log("Estoy en Completo")
-                            var padre = document.getElementById("Tipo")[1].removeAttribute("disabled");
+                            var padre = document.getElementById("tipoExamen")[1].removeAttribute("disabled");
 
-                            
-                        }else{
+
+
+
+                        } else {
                             //deshabilitar completo
-                            
+
 
                             //habilitar micro y macro
                             console.log("micro macro");
-                            var padre = document.getElementById("Tipo")[2].removeAttribute("disabled");
-                            var padre = document.getElementById("Tipo")[3].removeAttribute("disabled");
-                            
+                            var padre = document.getElementById("tipoExamen")[2].removeAttribute("disabled");
+                            var padre = document.getElementById("tipoExamen")[3].removeAttribute("disabled");
+
                         }
-                        
-                        
+
+
                     });</script>
 
                 <br>
 
                 -- micro macro
-                <select type="text" name="tipoExamen" id="Tipo" class="form-control" required>
-                    <option  value="" selected disabled hidden>-- Seleccionar --</option>
-                    <option  value="Completo" disabled> Completo </option>
-                    <option value="Microscopico" disabled> Microscopico </option>
-                    <option  value="Macroscopico" disabled> Macroscopico </option>
-                    
+                <select type="text" name="tipoExamen" id="tipoExamen" class="form-control" required>
+                    <option value="" selected disabled hidden>-- Seleccionar --</option>
+                    <option value="Completo" > Completo </option>
+                    <option value="Microscopico" > Microscopico </option>
+                    <option value="Macroscopico" > Macroscopico </option>
+
                 </select>
 
                 <br>
                 tipo Examen -- codigo examen genral
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-                <select name="examen" id="examen" class="form-control" required>
+
+                <select name="Subexamen" id="Subexamen" class="form-control" required>
                     <option value="" disabled selected>Seleccione un examen</option>
                     <%completo.forEach((subExamen)=>{
                         %>
