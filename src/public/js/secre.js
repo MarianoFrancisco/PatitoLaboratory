@@ -6,6 +6,6 @@ modificarPaciente = async (id, estado) => {
             //document.getElementById(id).innerHTML = !estado ;
         }
     }).fail(function () {
-        alert("error");
+        
     });
 }
