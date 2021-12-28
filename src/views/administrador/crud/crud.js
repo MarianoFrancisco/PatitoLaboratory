@@ -21,7 +21,7 @@ exports.saveUsuario= async (req,res)=>{
     const tipoUsuario = req.body.tipoUsuario;
     const idTurno = req.body.idTurno;
     const estado = await req.body.estadoUsuario;
-    const estado2 = estado=='on';
+    const estado2 = estado =='on';
     const passEncriptado = await encrypt(passwordUsuario);
 
     conexion.query('INSERT INTO usuario SET ?',{usuario:usuario,correo:correo,passwordUsuario:passEncriptado,tipoUsuario:tipoUsuario,idTurno:idTurno,estado:estado2},(error,results)=>{
