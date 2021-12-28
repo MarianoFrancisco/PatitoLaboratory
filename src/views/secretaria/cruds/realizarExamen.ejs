@@ -1,78 +1,81 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-        <title>Modificar Usuario</title>
-        
-        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    </head>
-    <body>
-        
-        <% if (user){ %>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Modificar Usuario</title>
+
+    <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+    <% if (user){ %>
         <div class="container">
             <h1 style="text-align: center;">Generar examen</h1>
             <hr>
             <form action="/ExamenPaciente" method="post" class="form-control" style="width: 500px; height: 470px">
                 <br>
                 Cui
-                <p style="font-size: larger;" > <%= user.cui%></p>
+                <p style="font-size: larger;">
+                    <%= user.cui%>
+                </p>
                 <input id="cui" name="cui" value="<%=user.cui%>" hidden>
-                
+
                 Fecha del examen:
-                <input type="date" id="txtfecha" name="txtfecha" class="form-control" required/>    
+                <input type="date" id="txtfecha" name="txtfecha" class="form-control" required />
                 <br>
-                
+
                 tipo Examen -- codigo examen genral
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
                 <select name="examen" id="examen" class="form-control" required>
                     <option value="" disabled selected>Seleccione un examen</option>
-                            <% examen.forEach((examen)=>{
-                                %>
-                                <option value='<%=examen.nombreExamen%>' ><%=examen.nombreExamen%></option>
-                                 <%      
-                            })%>
+                    <% examen.forEach((examen)=>{
+                        %>
+                        <option value='<%=examen.nombreExamen%>'>
+                            <%=examen.nombreExamen%>
+                        </option>
+                        <% })%>
                 </select>
 
-                <script>$("#examen").change(function(){
-                    var estado = $("#examen").val();
-                    if(estado=="Hematologia"){
-                
-                    let elemento = document.createElement("option");
+                <script>$("#examen").change(function () {
 
-		            let nombreLista = document.createTextNode("Completo");
-                    elemento.setAttribute("value","Completo");
-		
-            		elemento.appendChild(nombreLista);
-
-		            document.getElementById("Tipo").appendChild(elemento);
-
-                    }else{
                         
-                    let elemento = document.createElement("option");
-                    let elemento1 = document.createElement("option");
 
-                    let nombreLista = document.createTextNode("Microscopico");
-                    let nombreLista1 = document.createTextNode("Macroscopico");
+                        //var selecionado = document.getElementById("examen");
+                        //var opcion = selecionado.options[selecionado.selectedIndex].text;
+                        
+                        if(document.getElementById("examen").value=="Hematologia"){
+                            
+                            //deshabilitar micro y macro
+                            
+                            
+                            
+                            // habilitar solo completo
+                            console.log("Estoy en Completo")
+                            var padre = document.getElementById("Tipo")[1].removeAttribute("disabled");
+                        }else{
+                            //deshabilitar completo
+                            
 
-                    elemento.appendChild(nombreLista);
-                    elemento1.appendChild(nombreLista1);
-
-                    elemento.setAttribute("value","Microscopio");
-                    elemento1.setAttribute("value","Macroscopio");
-
-                    document.getElementById("Tipo").appendChild(elemento);
-                    document.getElementById("Tipo").appendChild(elemento1);
-
-                    }
-                    
-
+                            //habilitar micro y macro
+                            console.log("micro macro");
+                            var padre = document.getElementById("Tipo")[2].removeAttribute("disabled");
+                            var padre = document.getElementById("Tipo")[3].removeAttribute("disabled");
+                            
+                        }
+                        
+                        
                     });</script>
-                
+
                 <br>
-                
-                --  micro macro
+
+                -- micro macro
                 <select type="text" name="tipoExamen" id="Tipo" class="form-control" required>
-                    <option value="" selected disabled hidden>-- Seleccionar --</option>
+                    <option  value="" selected disabled hidden>-- Seleccionar --</option>
+                    <option  value="Completo" disabled> Completo </option>
+                    <option value="Microscopico" disabled> Microscopico </option>
+                    <option  value="Macroscopico" disabled> Macroscopico </option>
                     
                 </select>
 
@@ -81,20 +84,20 @@
                 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
                 <select name="examen" id="examen" class="form-control" required>
                     <option value="" disabled selected>Seleccione un examen</option>
-                            
+
                 </select>
 
                 <br>
-                
-                <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
-                
+
+                <input type="submit" value="Guardar" class="btn btn-primary btn-lg" />
+
                 <a href="/ingresarPaciente">Regresar</a>
             </form>
         </div>
-        
+
         <% } %>
-        
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
-    </body>
-    
+
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+</body>
+
 </html>
