@@ -5,7 +5,8 @@ const {encrypt, compare } = require('./../extra/encriptar');
 const {tokenSign, verifyToken, decodeSing} = require('./../extra/generateToken');
 const conexion = require('.././extra/db');
 // Iniciar sesion en los diferentes usuarios
-
+const sqlTurno = 'SELECT * FROM turno';
+const sqlResultados = 'SELECT * FROM reporte';
 //Secretaria
 router.get('/secretariaIndex', (req, res) => {
   res.render('./secretaria/secretariaIndex', { title: 'Inicio' });
@@ -29,21 +30,34 @@ router.get('/ingresarPaciente', (req, res) => {
 });
 
 router.get('/resultadosSecretaria', (req, res) => {
-  res.render('./secretaria/resultadosSecretaria', { title: 'Resultados' });
+  conexion.query(sqlResultados, (error,results) => {
+    if(error) throw error;
+    else{
+     res.render('./secretaria/resultadosSecretaria',{results:results});
+    }
+  });
+  console.log("Precondiciones");
+  console.log("Deben haber resultados");
 });
 
 router.get('/horariosSecretaria', (req, res) => {
-  
-  res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
+  conexion.query(sqlTurno, (error,results) => {
+    if(error) throw error;
+    else{
+     res.render('./secretaria/horariosSecretaria',{results:results});
+    }
+  });
+  console.log("Precondiciones");
+  console.log("Deben haber horarios");
 
 });
-
 
 
 let nombre, tokenSession = ''; 
 const sqlUsuario = 'SELECT * FROM usuario';
 const sqlExamen = 'SELECT * FROM examen';
 const sqlSubExamen = 'SELECT * FROM subExamen';
+
 // Iniciar sesion en los diferentes usuarios
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
@@ -185,12 +199,29 @@ router.post('/UploadPaciente',crudPaciente.editPaciente);
 //Agregar Examen
 router.get('/PacienteExamen/:cui', (req, res) => {
 const cui = req.params.cui;
-  
+
   conexion.query('SELECT * FROM paciente WHERE cui=?',[cui],(error,results)=>{
     if(error){
       throw error;
     }else{
-      res.render('./secretaria/cruds/realizarExamen',{user:results[0]});
+      conexion.query(sqlSubExamen,(error, results2) => {
+        if(error){
+          throw error;
+        }else{
+
+          if(error){
+            throw error;
+          }
+          else{
+            const sqlExam = 'SELECT * FROM examen';
+            conexion.query(sqlExam,(error,results3)=>{
+              res.render('./secretaria/cruds/realizarExamen',{user:results[0],subExamen:results2,examen:results3});
+            })
+          }
+
+          
+        }
+      });
     }
   });
   
@@ -213,4 +244,18 @@ router.get('/editarExamen/:codigoExamen',(req,res)=>{
 router.post('/subirExamen',crud.subirExamen);
 //crud sub-examen
 router.post('/saveSubExamen',crud.saveSubExamen);
+//crud turno
+const crud2 = require('../views/secretaria/cruds/crudPacienteExamen');
+router.post('/saveTurno',crud2.saveTurno);
+router.get('/editarTurno/:idTurno',(req,res)=>{
+  const turno=req.params.idTurno;
+  conexion.query('SELECT * FROM turno WHERE idTurno=?',[turno],(error,results)=>{
+    if(error){
+      console.log(error);
+  }else{
+      res.render('./secretaria/cruds/editarTurno',{turno:results[0]});
+  }
+  })
+})
+router.post('/subirTurno',crud2.subirTurno);
 module.exports = router;
