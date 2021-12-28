@@ -85,6 +85,7 @@
                     <td class="text-center"><%=rol%></td>
                     <td class="text-center">
                         <a href="/editarUsuario/<%=usuario.usuario%>" class="btn btn-primary ">Modificar</a>
+                        <a href="/passwordUsuario?usuario=<%=usuario.usuario%>" class="btn btn-primary ">Modificar contrasena</a>
                         <% if (usuario.estado) { %>
                           <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="estatus1" onclick="modificarUser('<%= usuario.usuario %>',' <%= usuario.estado %>')" checked="on">
