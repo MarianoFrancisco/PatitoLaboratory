@@ -57,7 +57,7 @@ let nombre, tokenSession = '';
 const sqlUsuario = 'SELECT * FROM usuario';
 const sqlExamen = 'SELECT * FROM examen';
 const sqlSubExamen = 'SELECT * FROM subExamen';
-const sqlCompleto = 'SELECT * FROM subExamen WHERE tipo="Completo" AND codigoExamen=100';
+const sqlCompleto = 'SELECT * FROM subExamen ';
 const sqlMacroOrina = 'SELECT * FROM subExamen WHERE tipo="Macroscopico" AND codigoExamen=101';
 const sqlMicroOrina = 'SELECT * FROM subExamen WHERE tipo="Microscopico" AND codigoExamen=101';
 const sqlMacroHeces = 'SELECT * FROM subExamen WHERE tipo="Macroscopico" AND codigoExamen=102';
