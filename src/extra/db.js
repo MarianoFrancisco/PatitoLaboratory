@@ -1,4 +1,4 @@
-const mysqlhost = process.env.MYSQLHOST || 'localhost';
+const mysqlhost = process.env.MYSQLHOST || '192.168.1.11';
 const mysqluser = process.env.MYSQLUSER || "patitoOliver";
 const mysqlpass = process.env.MYSQLPASS || "Oliver12345";
 const mysqldatabase = process.env.MYSQLDATABASE || "patitoBD";

@@ -187,7 +187,18 @@ const cui = req.params.cui;
         if(error){
           throw error;
         }else{
-          res.render('./secretaria/cruds/realizarExamen',{user:results[0],subExamen:results2});
+
+          if(error){
+            throw error;
+          }
+          else{
+            const sqlExam = 'SELECT * FROM examen';
+            conexion.query(sqlExam,(error,results3)=>{
+              res.render('./secretaria/cruds/realizarExamen',{user:results[0],subExamen:results2,examen:results3});
+            })
+          }
+
+          
         }
       });
     }

@@ -14,42 +14,84 @@
             <hr>
             <form action="/ExamenPaciente" method="post" class="form-control" style="width: 500px; height: 470px">
                 <br>
+                Cui
+                <p style="font-size: larger;" > <%= user.cui%></p>
                 <input id="cui" name="cui" value="<%=user.cui%>" hidden>
-                Examen a realizar
-                <select type="number"  name="idExamen" class="form-control" required >
-                    <option value="" selected disabled hidden>-- Seleccionar --</option>
-                    <option value='100'>Hematologia</option>
-                    <option value='101' >Orina</option>
-                    <option value='102'>Heces</option> 
-                </select>
-                <br>
-
+                
                 Fecha del examen:
                 <input type="date" id="txtfecha" name="txtfecha" class="form-control" required/>    
                 <br>
-                Cui
-                <input type="number" name="cui1" class="form-control" value="<%=user.cui%>">
-                </input>
-                <br>
-                Tipo del examen
-                <select type="number" name="idExamen" class="form-control" required>
-                    <option value="" selected disabled hidden>-- Seleccionar --</option>
-                    <option value='100' >Completo</option>
-                    <option value='101' >Macroscopico</option>
-                    <option value='102'>Microscopico</option> 
+                
+                tipo Examen -- codigo examen genral
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+                <select name="examen" id="examen" class="form-control" required>
+                    <option value="" disabled selected>Seleccione un examen</option>
+                            <% examen.forEach((examen)=>{
+                                %>
+                                <option value='<%=examen.nombreExamen%>' ><%=examen.nombreExamen%></option>
+                                 <%      
+                            })%>
                 </select>
-                <br>
-                Tipo subexamen
-                <select type="number" name="sexo" class="form-control" required>
-                    <option value="" selected disabled hidden>-- Seleccionar --</option>
-                    <% subExamen.forEach((subExamen)=>{
-                        if(subExamen.tipo=="Completo"){%>
-                            <option value='M' ><%=subExamen.tipo%></option>
-                            <%}
-                    })%>
-                </select>
+
+                <script>$("#examen").change(function(){
+                    var estado = $("#examen").val();
+                    if(estado=="Hematologia"){
+                
+                    let elemento = document.createElement("option");
+
+		            let nombreLista = document.createTextNode("Completo");
+                    elemento.setAttribute("value","Completo");
+		
+            		elemento.appendChild(nombreLista);
+
+		            document.getElementById("Tipo").appendChild(elemento);
+
+                    }else{
+                        
+                    let elemento = document.createElement("option");
+                    let elemento1 = document.createElement("option");
+
+                    let nombreLista = document.createTextNode("Microscopico");
+                    let nombreLista1 = document.createTextNode("Macroscopico");
+
+                    elemento.appendChild(nombreLista);
+                    elemento1.appendChild(nombreLista1);
+
+                    elemento.setAttribute("value","Microscopio");
+                    elemento1.setAttribute("value","Macroscopio");
+
+                    document.getElementById("Tipo").appendChild(elemento);
+                    document.getElementById("Tipo").appendChild(elemento1);
+
+                    }
+                    
+
+                    });</script>
                 
                 <br>
+                
+                --  micro macro
+                <select type="text" name="tipoExamen" id="Tipo" class="form-control" required>
+                    <option value="" selected disabled hidden>-- Seleccionar --</option>
+                    
+                </select>
+
+                
+
+                <br>
+                tipo Examen -- codigo examen genral
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
+                <select name="examen" id="examen" class="form-control" required>
+                    <option value="" disabled selected>Seleccione un examen</option>
+                            <%subExamen.forEach((subExamen)=>{
+                                %>
+                                <option value='<%=subExamen.nombreSub%>'><%=subExamen.nombreSub%></option>
+                                 <%      
+                            })%>
+                </select>
+
+                <br>
+                
                 <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
                 
                 <a href="/ingresarPaciente">Regresar</a>
@@ -58,7 +100,7 @@
         
         <% } %>
         
-        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.0/jquery.min.js"></script>
     </body>
     
 </html>
