@@ -1,13 +1,30 @@
 const res = require('express/lib/response');
 const conexion = require('../../../extra/db');
+const {encrypt, compare } = require('./../../../extra/encriptar');
 //usuario
-exports.saveUsuario= (req,res)=>{
+exports.estadoUsuario= async (req,res)=>{
+        const usuario = await req.query.usuario || '';
+        const estado = await req.query.estado || 0;
+        const estado2 = estado == 1;
+    conexion.query('UPDATE usuario SET ? WHERE usuario= ?',[{estado: !estado2},usuario],(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/administrador/usuarios');
+        }
+    })
+}
+exports.saveUsuario= async (req,res)=>{
     const usuario=req.body.usuario;
     const correo = req.body.correo;
     const passwordUsuario = req.body.passwordUsuario;
     const tipoUsuario = req.body.tipoUsuario;
     const idTurno = req.body.idTurno;
-    conexion.query('INSERT INTO usuario SET ?',{usuario:usuario,correo:correo,passwordUsuario:passwordUsuario,tipoUsuario:tipoUsuario,idTurno:idTurno},(error,results)=>{
+    const estado = await req.body.estadoUsuario;
+    const estado2 = estado=='on';
+    const passEncriptado = await encrypt(passwordUsuario);
+
+    conexion.query('INSERT INTO usuario SET ?',{usuario:usuario,correo:correo,passwordUsuario:passEncriptado,tipoUsuario:tipoUsuario,idTurno:idTurno,estado:estado2},(error,results)=>{
         if(error){
             console.log(error);
         }else{
@@ -21,7 +38,10 @@ exports.subirUsuario=(req,res)=>{
     const passwordUsuario = req.body.passwordUsuario;
     const tipoUsuario = req.body.tipoUsuario;
     const idTurno = req.body.idTurno;
-    conexion.query('UPDATE usuario SET ? WHERE usuario= ?',[{correo:correo,passwordUsuario:passwordUsuario,tipoUsuario:tipoUsuario,idTurno:idTurno},usuario],(error,results)=>{
+    const estado = req.body.estado;
+    const estado2 = estado == 'on';
+
+    conexion.query('UPDATE usuario SET ? WHERE usuario= ?',[{correo:correo,passwordUsuario:passwordUsuario,tipoUsuario:tipoUsuario,idTurno:idTurno,estado: estado2},usuario],(error,results)=>{
         if(error){
             console.log(error);
         }else{

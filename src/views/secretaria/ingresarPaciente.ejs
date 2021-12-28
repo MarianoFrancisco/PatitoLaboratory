@@ -67,16 +67,20 @@
             </tr>
         </thead> 
         <tbody>
+          <% results.forEach((user)=>{ %>
                 <tr>
-                    <th scope="row"></th>
-                    <td class="text-center"></td>
-                    <td class="text-center"></td>
+
+                    <th scope="row"><%= user.nombrePaciente%></th>
+                    <td class="text-center"><%= user.edadPaciente%></td>
+                    <td class="text-center"><%= user.numeroPaciente%></td>
                     <td class="text-center">
-                        <a href="" class="btn btn-primary">Editar</a>
+                        <a href="/editPaciente/<%= user.cui%>" class="btn btn-primary">Editar</a>
+                        <a href="/PacienteExamen/<%= user.cui%>" class="btn btn-primary">Registrar examen</a>
                         <a href="" class="btn btn-danger">Elimiar</a>
                     </td>
                 </tr>
-        </tbody>            
+              <% }) %>
+              </tbody>            
                     </div>
                 </div>
             </div>
@@ -108,7 +112,7 @@
         </div>
 
         <div class="modal-body p-5 pt-0">
-          <form action="/pruebaCrud" class="was-validated">
+          <form action="/secretaria/ingresarPaciente" method="post" class="was-validated">
             <div class="form-floating mb-3">
               <input
                 type="text"
@@ -131,13 +135,28 @@
             </div>
             <div class="form-floating mb-3">
               <input
-                type="text"
+                type="number"
+                class="form-control rounded-4"
+                id="cui"
+                name="cui"
+                required
+              />
+              <label for="floatingInputDay">CUI</label>
+            </div>
+            <div class="form-floating mb-3">
+              <select 
+                type="number"
                 class="form-control rounded-4"
                 id="Sexo"
                 name="sexo"
-                required
-              />
-              <label for="floatingPhone">Sexo</label>
+                onchange="var id = document.querySelector('select');
+                var idExamens = id.value;
+                console.log(idExamens);"
+                >
+                  <option value="M">Masculino</option> 
+                  <option value="F">Femenino</option> 
+               </select >
+              <label for="tipoUsuario">Sexo</label>
             </div>
             <div class="form-floating mb-3">
               <input
@@ -158,16 +177,6 @@
                 required
               />
               <label for="floatingPhone">Número telefonico</label>
-            </div>
-            <div class="form-floating mb-3">
-              <input
-                type="text"
-                class="form-control rounded-4"
-                id="Examen"
-                name="examen"
-                required
-              />
-              <label for="floatingPhone">Examen a realizar</label>
             </div>
             <button
               class="w-100 mb-2 btn btn-lg rounded-4 btn-primary"

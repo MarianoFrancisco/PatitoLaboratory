@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+        <title>Modificar Usuario</title>
+        
+        <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <% if (user){ %>
+        <div class="container">
+            <h1 style="text-align: center;">Generar examen</h1>
+            <hr>
+            <form action="/ExamenPaciente" method="post" class="form-control" style="width: 500px; height: 470px">
+                <br>
+                <input id="cui" name="cui" value="<%=user.cui%>" hidden>
+                Examen a realizar
+                <select type="number"  name="idExamen" class="form-control" required >
+                    <option value="" selected disabled hidden>-- Seleccionar --</option>
+                    <option value='100'>Hematologia</option>
+                    <option value='101' >Orina</option>
+                    <option value='102'>Heces</option> 
+                </select>
+                <br>
+
+                Fecha del examen:
+                <input type="date" id="txtfecha" name="txtfecha" class="form-control" required/>    
+                <br>
+                Cui
+                <input type="number" name="cui1" class="form-control" value="<%=user.cui%>">
+                </input>
+                <br>
+                Tipo del examen
+                <select type="number" name="idExamen" class="form-control" required>
+                    <option value="" selected disabled hidden>-- Seleccionar --</option>
+                    <option value='100' >Completo</option>
+                    <option value='101' >Macroscopico</option>
+                    <option value='102'>Microscopico</option> 
+                </select>
+                <br>
+                Tipo subexamen
+                <select type="number" name="sexo" class="form-control" required>
+                    <option value="" selected disabled hidden>-- Seleccionar --</option>
+                    <option value='M' >Masculino</option>
+                    <option value='F'>Femenino</option> 
+                </select>
+                
+                <br>
+                <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
+                
+                <a href="/ingresarPaciente">Regresar</a>
+            </form>
+        </div>
+        
+        <% } %>
+        
+        
+    </body>
+    
+</html>

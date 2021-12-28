@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Modificar Usuario</title>
+        <link href="../CSS/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <% if (user){ %>
+        <div class="container">
+            <h1 style="text-align: center;">Modificar Paciente</h1>
+            <hr>
+            <form action="/UploadPaciente" method="post" class="form-control" style="width: 500px; height: 470px">
+                <br>
+                <input id="cui" name="cui" value="<%= user.cui%>" hidden>
+                
+                Nombre:
+                <input type="text" name="nombre" class="form-control" value="<%=user.nombrePaciente%>"/>
+                <br>
+                Edad:
+                <input type="number" name="edad" class="form-control" value="<%=user.edadPaciente%>">
+                </input>    
+                <br>
+                Telefono
+                <input type="number" name="telefono" class="form-control" value="<%=user.numeroPaciente%>">
+                </input>
+                <br>
+                Sexo
+                <select type="number" name="sexo" class="form-control" >
+                    <option <%= user.sexo== 'M' ? "selected" : '' %> value='M' >Masculino</option>
+                    <option <%= user.sexo== 'F' ? "selected" : '' %> value='F'>Femenino</option> 
+                </select>
+                <br>
+                Cui
+                <h4><%= user.cui%></h4>
+                <br>
+                <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
+                
+                <a href="/ingresarPaciente">Regresar</a>
+            </form>
+        </div>
+        
+        <% } %>
+
+    </body>
+</html>
