@@ -195,6 +195,7 @@ router.get('/editPaciente/:cui', (req, res) => {
   
 });
 router.post('/UploadPaciente',crudPaciente.editPaciente);
+router.get('/estadoPaciente',crudPaciente.estadoPaciente);
 
 //Agregar Examen
 router.get('/PacienteExamen/:cui', (req, res) => {

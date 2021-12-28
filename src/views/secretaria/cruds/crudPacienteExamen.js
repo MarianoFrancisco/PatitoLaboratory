@@ -9,14 +9,29 @@ exports.savePaciente=(req,res)=>{
     const edad = req.body.edad;
     const telefono = req.body.telefono;
     const examen = req.body.examen;
+    const estado = req.body.estadoPaciente;
+    const estado2 = estado == 'on';
     
-    conexion.query('INSERT INTO paciente SET ?',{nombrePaciente:nombreCompleto,sexo:sexo,edadPaciente:edad,cui:cui,edadPaciente:edad,numeroPaciente:telefono},(error,results)=>{
+    conexion.query('INSERT INTO paciente SET ?',{nombrePaciente:nombreCompleto,sexo:sexo,edadPaciente:edad,cui:cui,edadPaciente:edad,numeroPaciente:telefono,estado:estado2},(error,results)=>{
         if(error){
             console.log(error);
         }else{
             res.redirect('/ingresarPaciente');
         }
     }); 
+}
+exports.estadoPaciente= async (req,res)=>{
+
+    const cui = await req.query.usuario || '';
+    const estado = await req.query.estado || 0;
+    const estado2 = estado == 1;
+    conexion.query('UPDATE paciente SET ? WHERE cui= ?',[{estado: !estado2},cui],(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/ingresarPaciente');
+        }
+    })
 }
 
 exports.editPaciente=(req,res)=>{
