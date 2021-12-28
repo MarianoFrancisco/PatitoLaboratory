@@ -212,8 +212,7 @@ router.get('/editPaciente/:cui', (req, res) => {
   });
 
 });
-router.post('/UploadPaciente',crudPaciente.editPaciente);
-router.get('/estadoPaciente',crudPaciente.estadoPaciente);
+router.post('/UploadPaciente', crudPaciente.editPaciente);
 
 //Agregar Examen
 router.get('/PacienteExamen/:cui', (req, res) => {
