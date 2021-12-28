@@ -7,6 +7,7 @@ const conexion = require('.././extra/db');
 // Iniciar sesion en los diferentes usuarios
 const sqlTurno = 'SELECT * FROM turno';
 const sqlResultados = 'SELECT * FROM reporte';
+const sqlRealizar = 'SELECT * FROM examenRealizar ';
 //Secretaria
 router.get('/secretariaIndex', (req, res) => {
   res.render('./secretaria/secretariaIndex', { title: 'Inicio' });
@@ -39,7 +40,16 @@ router.get('/resultadosSecretaria', (req, res) => {
   console.log("Precondiciones");
   console.log("Deben haber resultados");
 });
-
+router.get('/registrosPaciente', (req, res) => {
+  conexion.query(sqlRealizar, (error, results) => {
+    if (error) throw error;
+    else {
+      res.render('./secretaria/examenesRegistrados', { results: results });
+    }
+  });
+  console.log("Precondiciones");
+  console.log("Deben haber resultados");
+});
 router.get('/horariosSecretaria', (req, res) => {
   conexion.query(sqlTurno, (error, results) => {
     if (error) throw error;

@@ -14,7 +14,7 @@
 
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <body class="home">
-  
+    
     <div class="container-fluid display-table">
         <div class="row display-table-row">
             <div class="col-md-2 col-sm-1 hidden-xs display-table-cell v-align box" id="navigation">
@@ -27,8 +27,8 @@
                     <ul>
                         <li><a href="/secretariaIndex"><i class="fa fa-home" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Inicio</span></a></li>
                         <li ><a href="/ingresarPaciente"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Registrar</span></a></li>
-                        <li ><a href="/registrosPaciente"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Registros</span></a></li>
-                        <li class="active"><a href="/resultadosSecretaria"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
+                        <li class="active"><a href="/registrosPaciente"><i class="fa fa-tasks" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Registros</span></a></li>
+                        <li><a href="/resultadosSecretaria"><i class="fa fa-bar-chart" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Resultados</span></a></li>
                         <li><a href="/horariosSecretaria"><i class="fa fa-user" aria-hidden="true"></i><span class="hidden-xs hidden-sm">Horarios</span></a></li>
                         
                     </ul>
@@ -51,37 +51,33 @@
                         </div>
                     </header>
                 </div>
-                <h1 style="text-align: center;">RESULTADOS</h1>  
+                <h1 style="text-align: center;">EXAMENES A REALIZAR</h1>  
                 <div class="user-dashboard">
                         <br>
                         <br>             
                     <table class="table table-bordered">
                     <thead>
                         <tr>
-                        <th >Reporte</th>
-                        <th class="text-center">Numero Examen</th>
-                        <th class="text-center">Fecha y hora</th>
+                        <th >ID</th>
+                        <th class="text-center">Fecha</th>
                         <th class="text-center">Cui</th>
-                        <th class="text-center">Nombre Examen</th>
+                        <th class="text-center">Nombre Sub Examen</th>
                         <th class="text-center">Tipo</th>
                         <th class="text-center">Codigo Examen</th>
-                        <th class="text-center">Colegiado</th>
                         <th class="text-center">Opciones</th>
                         </tr>
                     </thead> 
                     <tbody>
                         <% results.forEach((reporte)=>{%>
                             <tr>
-                                <th scope="row"><%=reporte.codigoReporte%></th>
-                                <td class="text-center"><%=reporte.idExamen%></td>
-                                <td class="text-center"><%=reporte.fechaHora%></td>
+                                <th scope="row"><%=reporte.idExamen%></th>
+                                <td class="text-center"><%=reporte.fechaExamen%></td>
                                 <td class="text-center"><%=reporte.cui%></td>
                                 <td class="text-center"><%=reporte.nombreSubExamen%></td>
                                 <td class="text-center"><%=reporte.tipo%></td>
                                 <td class="text-center"><%=reporte.codigoExamen%></td>
-                                <td class="text-center"><%=reporte.numeroColegiado%></td>
                                 <td class="text-center">
-                                    <a href="" class="btn btn-primary">Enviar resultados</a>
+                                    <a href="" class="btn btn-primary">Enviar a analisis</a>
                                 </td>
                             </tr>
                             <%})%>
