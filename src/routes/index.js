@@ -178,12 +178,18 @@ router.post('/UploadPaciente',crudPaciente.editPaciente);
 //Agregar Examen
 router.get('/PacienteExamen/:cui', (req, res) => {
 const cui = req.params.cui;
-  
+
   conexion.query('SELECT * FROM paciente WHERE cui=?',[cui],(error,results)=>{
     if(error){
       throw error;
     }else{
-      res.render('./secretaria/cruds/realizarExamen',{user:results[0]});
+      conexion.query(sqlSubExamen,(error, results2) => {
+        if(error){
+          throw error;
+        }else{
+          res.render('./secretaria/cruds/realizarExamen',{user:results[0],subExamen:results2});
+        }
+      });
     }
   });
   
