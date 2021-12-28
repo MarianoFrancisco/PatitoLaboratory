@@ -172,6 +172,9 @@ router.get('/administrador/roles', (req, res) => {
 //CRUD USUARIO
 const crud = require('../views/administrador/crud/crud');
 
+router.get('/passwordUsuario', crud.passwordUsuario2);
+router.post('/passwordUsuario', crud.passwordUsuario1);
+
 router.get('/estadoUsuario', crud.estadoUsuario);
 router.post('/saveUsuario', crud.saveUsuario);
 
