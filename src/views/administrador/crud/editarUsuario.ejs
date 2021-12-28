@@ -20,7 +20,9 @@
                 <br>
                 TURNO:
                 <select type="number" name="idTurno" class="form-control" value="">
-                    <option <%= usuario.idTurno=="1" ? "selected" : "" %> value='1'>1</option> 
+                    <% results2.forEach((turno)=>{%>
+                        <option value="<%=turno.idTurno%>"><%=turno.idTurno%></option> 
+                      <%})%>
                 </select>
                 <br>
                 ROL:

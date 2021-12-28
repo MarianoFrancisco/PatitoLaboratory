@@ -146,7 +146,12 @@ router.get('/administrador/usuarios', (req, res) => {
   conexion.query(sqlUsuario, (error, results) => {
     if (error) throw error;
     else {
-      res.render('./administrador/usuarios', { results: results });
+      conexion.query(sqlTurno, (error, results2) => {
+        if (error) throw error;
+        else {
+          res.render('./administrador/usuarios', { results: results,results2:results2 });
+        }
+      });
     }
   });
   console.log("Precondiciones");
@@ -176,7 +181,13 @@ router.get('/editarUsuario/:usuario', (req, res) => {
     if (error) {
       console.log(error);
     } else {
-      res.render('./administrador/crud/editarUsuario', { usuario: results[0] });
+      conexion.query(sqlTurno, (error, results2) => {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render('./administrador/crud/editarUsuario', { usuario: results[0],results2:results2 });
+        }
+      })
     }
   })
 })
@@ -273,6 +284,7 @@ router.get('/editarExamen/:codigoExamen', (req, res) => {
     }
   })
 })
+
 router.post('/subirExamen', crud.subirExamen);
 //crud sub-examen
 router.post('/saveSubExamen', crud.saveSubExamen);
