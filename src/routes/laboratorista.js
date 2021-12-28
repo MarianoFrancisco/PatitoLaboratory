@@ -14,7 +14,4 @@ const initDB = require('./../extra/db')
         }); 
 
     }
-
-
-
     

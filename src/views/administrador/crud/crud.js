@@ -14,6 +14,23 @@ exports.estadoUsuario= async (req,res)=>{
         }
     })
 }
+exports.passwordUsuario1= async (req,res)=>{
+    const usuario=req.body.usuario;
+    const password = req.body.passwordUsuario;
+    const pass2 = await encrypt(password);
+
+conexion.query('UPDATE usuario SET ? WHERE usuario= ?',[{passwordUsuario: pass2},usuario],(error,results)=>{
+    if(error){
+        console.log(error);
+    }else{
+        res.redirect('/administrador/usuarios');
+    }
+})
+}
+exports.passwordUsuario2= async (req,res)=>{
+    const usuario = await req.query.usuario || '';
+    res.render('./administrador/crud/passwordUsuario', { usuario: usuario});
+}
 exports.saveUsuario= async (req,res)=>{
     const usuario=req.body.usuario;
     const correo = req.body.correo;

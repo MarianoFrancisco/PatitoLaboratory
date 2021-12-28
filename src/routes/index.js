@@ -7,6 +7,7 @@ const conexion = require('.././extra/db');
 // Iniciar sesion en los diferentes usuarios
 const sqlTurno = 'SELECT * FROM turno';
 const sqlResultados = 'SELECT * FROM reporte';
+const sqlRealizar = 'SELECT * FROM examenRealizar ';
 //Secretaria
 router.get('/secretariaIndex', (req, res) => {
   res.render('./secretaria/secretariaIndex', { title: 'Inicio' });
@@ -39,7 +40,16 @@ router.get('/resultadosSecretaria', (req, res) => {
   console.log("Precondiciones");
   console.log("Deben haber resultados");
 });
-
+router.get('/registrosPaciente', (req, res) => {
+  conexion.query(sqlRealizar, (error, results) => {
+    if (error) throw error;
+    else {
+      res.render('./secretaria/examenesRegistrados', { results: results });
+    }
+  });
+  console.log("Precondiciones");
+  console.log("Deben haber resultados");
+});
 router.get('/horariosSecretaria', (req, res) => {
   conexion.query(sqlTurno, (error, results) => {
     if (error) throw error;
@@ -172,6 +182,9 @@ router.get('/administrador/roles', (req, res) => {
 //CRUD USUARIO
 const crud = require('../views/administrador/crud/crud');
 
+router.get('/passwordUsuario', crud.passwordUsuario2);
+router.post('/passwordUsuario', crud.passwordUsuario1);
+
 router.get('/estadoUsuario', crud.estadoUsuario);
 router.post('/saveUsuario', crud.saveUsuario);
 
@@ -212,8 +225,7 @@ router.get('/editPaciente/:cui', (req, res) => {
   });
 
 });
-router.post('/UploadPaciente',crudPaciente.editPaciente);
-router.get('/estadoPaciente',crudPaciente.estadoPaciente);
+router.post('/UploadPaciente', crudPaciente.editPaciente);
 
 //Agregar Examen
 router.get('/PacienteExamen/:cui', (req, res) => {
