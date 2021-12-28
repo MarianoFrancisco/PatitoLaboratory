@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Modificar Usuario</title>
+        <link href="/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    </head>
+    <body>
+        <% if (turno) { %>
+        <div class="container">
+            <h1>Modificar Turno</h1>
+            <hr>
+            <form action="/subirTurno" method="post" class="form-control" style="width: 500px; height: 400px">
+                <input id="idTurno" name="idTurno" value="<%= turno.idTurno %>" hidden>
+                ID:
+                <h4><%= turno.idTurno %></h4>
+                AREA:
+                <select type="number" name="area" class="form-control" value="">
+                    <option <%= turno.area=='Administrador' ? "selected" : '' %> value="Administrador">Administrador</option> 
+                    <option <%= turno.area=='Secretaria' ? "selected" : '' %> value="Secretaria">Secretaria</option> 
+                    <option <%= turno.area=='Laboratorista' ? "selected" : '' %> value="Laboratorista">Laboratorista</option>
+                </select>
+                <br>
+                HORARIO INGRESO:
+                <input type="text" id="horarioIngreso" name="horarioIngreso" class="form-control" value="<%= turno.horarioIngreso%>"/>
+                <br>
+                DIAS:
+                <select type="text" name="dias" class="form-control" value="">
+                    <option <%= turno.dias=='L,M,X,J,V' ? "selected" : '' %> value="L,M,X,J,V">L,M,X,J,V</option> 
+                    <option <%= turno.dias=='S,D' ? "selected" : '' %> value="S,D">S,D</option> 
+                    <option <%= turno.dias=='L,M,X,J,V,S,D' ? "selected" : '' %> value="L,M,X,J,V,S,D">L,M,X,J,V,S,D</option>
+                </select>
+                 <br>
+                <input type="submit" value="Guardar" class="btn btn-primary btn-lg"/>
+                
+                <a href="/horariosSecretaria">Regresar</a>
+            </form>
+        </div>
+        <% } %>
+    </body>
+</html>

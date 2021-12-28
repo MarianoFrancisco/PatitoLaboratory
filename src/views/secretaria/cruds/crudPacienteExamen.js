@@ -55,3 +55,31 @@ exports.realizarExamen=(req,res)=>{
         }
     })
 }
+
+//turnos
+exports.saveTurno= (req,res)=>{
+    const idTurno=req.body.idTurno;
+    const area = req.body.area;
+    const horarioIngreso = req.body.horarioIngreso;
+    const dias = req.body.dias;
+    conexion.query('INSERT INTO turno SET ?',{idTurno:idTurno,area:area,horarioIngreso:horarioIngreso,dias:dias},(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/horariosSecretaria');
+        }
+    })
+}
+exports.subirTurno=(req,res)=>{
+    const idTurno=req.body.idTurno;
+    const area = req.body.area;
+    const horarioIngreso = req.body.horarioIngreso;
+    const dias = req.body.dias;
+    conexion.query('UPDATE turno SET ? WHERE idTurno= ?',[{area:area,horarioIngreso:horarioIngreso,dias:dias},idTurno],(error,results)=>{
+        if(error){
+            console.log(error);
+        }else{
+            res.redirect('/horariosSecretaria');
+        }
+    })
+}

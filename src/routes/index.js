@@ -5,7 +5,8 @@ const {encrypt, compare } = require('./../extra/encriptar');
 const {tokenSign, verifyToken, decodeSing} = require('./../extra/generateToken');
 const conexion = require('.././extra/db');
 // Iniciar sesion en los diferentes usuarios
-
+const sqlTurno = 'SELECT * FROM turno';
+const sqlResultados = 'SELECT * FROM reporte';
 //Secretaria
 router.get('/secretariaIndex', (req, res) => {
   res.render('./secretaria/secretariaIndex', { title: 'Inicio' });
@@ -29,21 +30,34 @@ router.get('/ingresarPaciente', (req, res) => {
 });
 
 router.get('/resultadosSecretaria', (req, res) => {
-  res.render('./secretaria/resultadosSecretaria', { title: 'Resultados' });
+  conexion.query(sqlResultados, (error,results) => {
+    if(error) throw error;
+    else{
+     res.render('./secretaria/resultadosSecretaria',{results:results});
+    }
+  });
+  console.log("Precondiciones");
+  console.log("Deben haber resultados");
 });
 
 router.get('/horariosSecretaria', (req, res) => {
-  
-  res.render('./secretaria/horariosSecretaria', { title: 'Horarios' });
+  conexion.query(sqlTurno, (error,results) => {
+    if(error) throw error;
+    else{
+     res.render('./secretaria/horariosSecretaria',{results:results});
+    }
+  });
+  console.log("Precondiciones");
+  console.log("Deben haber horarios");
 
 });
-
 
 
 let nombre, tokenSession = ''; 
 const sqlUsuario = 'SELECT * FROM usuario';
 const sqlExamen = 'SELECT * FROM examen';
 const sqlSubExamen = 'SELECT * FROM subExamen';
+
 // Iniciar sesion en los diferentes usuarios
 router.get('/', (req, res) => {
   res.render('index', { title: 'Iniciar Sesion' });
@@ -55,29 +69,33 @@ router.post('/Proceder', async (req, res) => {
 	nombre = req.body.nombre|| '';	  
   const password = req.body.password|| '';
 
+
   conexion.query('SELECT * FROM usuario WHERE usuario = ?',[nombre],async (error, results, fields) =>{
     if (error)
       throw error;
     
     if(results[0] != undefined){
-      let tipo = results[0].tipoUsuario;
-      let passwordd = results[0].passwordUsuario;
-      console.log(results[0]);
-      if (await compare(password,passwordd)) {
-        if(tipo == 1){ await res.redirect('/administrador');
+      if(results[0].estado==1){
+        let tipo = results[0].tipoUsuario;
+        let passwordd = results[0].passwordUsuario;
+        console.log(results[0]);
+        if (await compare(password,passwordd)) {
+          if(tipo == 1){ await res.redirect('/administrador');
       
-        }else if(tipo==2){ await res.render('./secretaria/secretariaIndex');
+          }else if(tipo==2){ await res.render('./secretaria/secretariaIndex');
       
-        }else if(tipo==3){
-          //tokenSession = await tokenSign(result);
-          //console.log(tokenSession);
-          res.redirect('/laboratorista');
-          //res.send({data: user, tokenSession});
+          }else if(tipo==3){
+            //tokenSession = await tokenSign(result);
+            //console.log(tokenSession);
+            res.redirect('/laboratorista');
+            //res.send({data: user, tokenSession});
       
+          }else{ res.status(404).redirect('/'); }
         }else{ res.status(404).redirect('/'); }
       }else{ res.status(404).redirect('/'); }
     }else{ res.status(404).redirect('/'); }
   });
+  
 });
 //rutas de laboratorista
 lab(router , nombre);
@@ -141,7 +159,10 @@ router.get('/administrador/roles', (req, res) => {
 
 //CRUD USUARIO
 const crud = require('../views/administrador/crud/crud');
-router.post('/saveUsuario',crud.saveUsuario);
+
+router.get('/estadoUsuario', crud.estadoUsuario);
+router.post('/saveUsuario', crud.saveUsuario );
+
 router.get('/editarUsuario/:usuario',(req,res)=>{
   const usuario=req.params.usuario;
   conexion.query('SELECT * FROM usuario WHERE usuario=?',[usuario],(error,results)=>{
@@ -223,4 +244,18 @@ router.get('/editarExamen/:codigoExamen',(req,res)=>{
 router.post('/subirExamen',crud.subirExamen);
 //crud sub-examen
 router.post('/saveSubExamen',crud.saveSubExamen);
+//crud turno
+const crud2 = require('../views/secretaria/cruds/crudPacienteExamen');
+router.post('/saveTurno',crud2.saveTurno);
+router.get('/editarTurno/:idTurno',(req,res)=>{
+  const turno=req.params.idTurno;
+  conexion.query('SELECT * FROM turno WHERE idTurno=?',[turno],(error,results)=>{
+    if(error){
+      console.log(error);
+  }else{
+      res.render('./secretaria/cruds/editarTurno',{turno:results[0]});
+  }
+  })
+})
+router.post('/subirTurno',crud2.subirTurno);
 module.exports = router;
